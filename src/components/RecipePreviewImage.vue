@@ -1,12 +1,13 @@
-<template lang="">
+<template>
       <img v-if="image_load" :src="imgSrc" alt="Recipe Image" class="image" style="width:100%"  />
+
 </template>
 <script>
 export default {
   name: "RecipePreviewImage",
   props: {
-    imgSrc: { type: String, default: "TODO" },
-    recipeTitle: { type: String, default: "TODO" },
+    imgSrc: { type: String, default: "assets/imageNotFound.png" },
+    recipeTitle: { type: String, default: "Not Found" },
   },
   data() {
     return {

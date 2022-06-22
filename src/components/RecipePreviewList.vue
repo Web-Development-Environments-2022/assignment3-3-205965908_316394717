@@ -11,38 +11,15 @@
 
 <script>
 import RecipePreview from "./RecipePreview.vue";
+
 export default {
   name: "RecipePreviewList",
   components: {
     RecipePreview
   },
   props: {
-    title: {
-      type: String,
-      required: true
-    }
-  },
-  data() {
-    return {
-      recipes: []
-    };
-  },
-  mounted() {
-    this.updateRecipes();
-  },
-  methods: {
-    async updateRecipes() {
-      try {
-        const response = await this.axios.get(
-          // this.$root.store.server_domain +
-          "http://127.0.0.1:80/recipes/random/3"
-        );
-        const recipes = response.data;
-        this.recipes = recipes;
-      } catch (error) {
-        console.log(error);
-      }
-    }
+    title: { type: String, required: true },
+    recipes: { type: Array, required: true }
   }
 };
 </script>
@@ -52,6 +29,7 @@ export default {
   width: 100%;
   height: 100%;
 }
+
 .container {
   min-height: 320px;
 }

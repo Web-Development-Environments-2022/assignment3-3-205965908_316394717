@@ -28,11 +28,33 @@
         <strong>{{ recipe.title }}</strong>
       </div>
       <br />
-      <i>{{ recipe.readyInMinutes }} minutes | {{ recipe.popularity }} likes</i>
-      <br />
-      <i class="fa-duotone fa-seedling"></i>
-      <i class="fa-duotone fa-salad"></i>
-      <i class="fa-duotone fa-wheat-slash"></i>
+      <table class="ml-auto mr-auto">
+        <tr>
+          <td><i class="fa fa-clock"></i><i> {{ recipe.readyInMinutes }} minutes</i></td>
+          <td>&nbsp;&nbsp;</td>
+          <td><i class="fa fa-thumbs-o-up" aria-hidden="true"></i><i> {{ recipe.popularity }} likes</i></td>
+        </tr>
+      </table>
+      <table class="ml-auto mr-auto">
+        <tr>
+          <td><i class="fa-solid fa-seedling"></i><i> {{ recipe.vegan }}</i></td>
+          <td>&nbsp;&nbsp;</td>
+          <td><i class="fas fa-fish"></i><i> {{ recipe.vegetarian }}</i></td>
+          <td>&nbsp;&nbsp;</td>
+          <td><i class="fa-solid fa-wheat-awn-circle-exclamation"></i><i> {{ recipe.glutenFree }}</i></td>
+        </tr>
+        <tr>
+          <td>
+            <i v-if="recipe.hasViewed === true" class="fa-solid fa-eye"></i>
+            <i v-else class="fa-solid fa-eye-slash"></i>
+          </td>
+          <td>&nbsp;&nbsp;</td>
+          <td>
+            <i v-if="recipe.isFavorite === true" class="fa-solid fa-star"></i>
+          </td>
+        </tr>
+      </table>
+
     </div>
   </div>
   <!-- </router-link> -->
@@ -40,23 +62,25 @@
 
 <script>
 import RecipePreviewImageVue from "./RecipePreviewImage.vue";
+
 export default {
   name: "RecipePreview",
   props: {
-    recipe: { type: Object, required: true },
+    recipe: { type: Object, required: true }
   },
   data() {
     return {};
   },
   components: {
-    RecipePreviewImageVue,
-  },
+    RecipePreviewImageVue
+  }
 };
 </script>
 
 <style scoped>
 .container {
 }
+
 .image-container {
   border: 3px solid rgb(0, 0, 0);
   width: 100%;
@@ -67,6 +91,7 @@ export default {
   border: 2px solid red;
   height: 20%;
 }
+
 .truncate-long-texts {
   text-overflow: ellipsis;
   overflow: hidden;
@@ -74,6 +99,7 @@ export default {
   height: 1.2em;
   white-space: nowrap;
 }
+
 .truncate-long-texts:hover {
   text-overflow: clip;
   overflow: unset;
