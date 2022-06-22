@@ -1,1 +1,10 @@
+// Define variable defaults
+//$body-bg: #000;
+//$body-color: #111;
+
+// Then import Bootstrap and BootstrapVue SCSS files (order is important)
+@import 'node_modules/bootstrap/scss/bootstrap.scss';
+@import 'node_modules/bootstrap-vue/src/index.scss';
+
+// fonts awesome
 @import '~mdb-ui-kit/css/mdb.min.css';

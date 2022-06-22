@@ -2,16 +2,8 @@ import Vue from "vue";
 import App from "./App.vue";
 import VueAxios from "vue-axios";
 import axios from "axios";
-
 import routes from "./routes";
 import VueRouter from "vue-router";
-import * as mdb from 'mdb-ui-kit'; // lib
-import { Input } from 'mdb-ui-kit'; // module
-Vue.use(VueRouter);
-const router = new VueRouter({
-  routes
-});
-
 import Vuelidate from "vuelidate";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
@@ -25,9 +17,17 @@ import {
   FormSelectPlugin,
   AlertPlugin,
   ToastPlugin,
-  LayoutPlugin
+  LayoutPlugin,
+  IconsPlugin,
+  BootstrapVue
 } from "bootstrap-vue";
+import './scss/form-style.scss'
 
+Vue.use(VueRouter);
+const router = new VueRouter({
+  routes
+});
+Vue.use(Vuelidate);
 [
   FormGroupPlugin,
   FormPlugin,
@@ -38,9 +38,16 @@ import {
   FormSelectPlugin,
   AlertPlugin,
   ToastPlugin,
-  LayoutPlugin
+  LayoutPlugin,
+  IconsPlugin,
+  BootstrapVue
 ].forEach((x) => Vue.use(x));
-Vue.use(Vuelidate);
+
+const axiosInstance = axios.create({
+  // withCredentials: true
+});
+Vue.use(VueAxios, axiosInstance);
+
 
 /* middleware */
 // axios.interceptors.request.use(
@@ -65,8 +72,6 @@ Vue.use(Vuelidate);
 //     return Promise.reject(error);
 //   }
 // );
-
-Vue.use(VueAxios, axios);
 
 Vue.config.productionTip = false;
 

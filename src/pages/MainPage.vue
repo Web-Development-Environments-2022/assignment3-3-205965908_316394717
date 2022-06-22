@@ -32,7 +32,7 @@ export default {
         );
         return response.data;
       } catch (error) {
-        console.log(error);
+        console.log(error.message);
       }
     },
     async GetLastViewedRecipes() {
@@ -43,7 +43,7 @@ export default {
         );
         return response.data;
       } catch (error) {
-        console.log(error);
+        console.log(error.message);
       }
     }
   },
