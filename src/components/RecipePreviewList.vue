@@ -1,9 +1,6 @@
 <template>
   <b-container>
-    <h3>
-      {{ title }}:
-      <slot></slot>
-    </h3>
+    <h3>{{ title }}:</h3>
     <b-row>
       <b-col v-for="r in recipes" :key="r.id">
         <RecipePreview class="recipePreview" :recipe="r" />
@@ -37,15 +34,11 @@ export default {
     async updateRecipes() {
       try {
         const response = await this.axios.get(
-          this.$root.store.server_domain + "/recipes/random",
-          // "https://test-for-3-2.herokuapp.com/recipes/random"
+          // this.$root.store.server_domain +
+          "http://127.0.0.1:80/recipes/random/3"
         );
-
-        // console.log(response);
-        const recipes = response.data.recipes;
-        this.recipes = [];
-        this.recipes.push(...recipes);
-        // console.log(this.recipes);
+        const recipes = response.data;
+        this.recipes = recipes;
       } catch (error) {
         console.log(error);
       }
@@ -55,7 +48,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+#b-container {
+  width: 100%;
+  height: 100%;
+}
 .container {
-  min-height: 400px;
+  min-height: 320px;
 }
 </style>

@@ -41,7 +41,8 @@
         variant="primary"
         style="width:100px;display:block;"
         class="mx-auto w-100"
-        >Login</b-button
+      >Login
+      </b-button
       >
       <div class="mt-2">
         Do not have an account yet?
@@ -65,6 +66,7 @@
 
 <script>
 import { required } from "vuelidate/lib/validators";
+
 export default {
   name: "Login",
   data() {
@@ -93,19 +95,15 @@ export default {
     },
     async Login() {
       try {
-        
         const response = await this.axios.post(
-          // "https://test-for-3-2.herokuapp.com/user/Login",
-          this.$root.store.server_domain +"/Login",
-          // "http://132.72.65.211:80/Login",
-          // "http://132.73.84.100:80/Login",
-
+          // this.$root.store.server_domain +
+          "http://127.0.0.1:80/Login",
           {
-            username: this.form.username,
+            userName: this.form.username,
             password: this.form.password
           }
         );
-        // console.log(response);
+        console.log(response);
         // this.$root.loggedIn = true;
         console.log(this.$root.store.login);
         this.$root.store.login(this.form.username);
@@ -116,13 +114,11 @@ export default {
       }
     },
     onLogin() {
-      // console.log("login method called");
       this.form.submitError = undefined;
       this.$v.form.$touch();
       if (this.$v.form.$anyError) {
         return;
       }
-      // console.log("login method go");
 
       this.Login();
     }

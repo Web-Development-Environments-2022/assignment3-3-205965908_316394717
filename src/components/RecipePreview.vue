@@ -1,9 +1,9 @@
 <template>
-  <router-link
+  <!-- <router-link
     :to="{ name: 'recipe', params: { recipeId: recipe.id } }"
     class="recipe-preview"
-  >
-    <div class="recipe-body">
+  > -->
+  <!-- <div class="recipe-body">
       <img v-if="image_load" :src="recipe.image" class="recipe-image" />
     </div>
     <div class="recipe-footer">
@@ -12,130 +12,81 @@
       </div>
       <ul class="recipe-overview">
         <li>{{ recipe.readyInMinutes }} minutes</li>
-        <li>{{ recipe.aggregateLikes }} likes</li>
+        <li>{{ recipe.popularity }} likes</li>
       </ul>
+    </div> -->
+
+  <div class="container">
+    <div class="image-container">
+      <RecipePreviewImageVue
+        :imgSrc="recipe.image"
+        :recipeTitle="recipe.title"
+      />
     </div>
-  </router-link>
+    <div class="content-container">
+      <div class="truncate-long-texts">
+        <strong>{{ recipe.title }}</strong>
+      </div>
+      <br />
+      <i>{{ recipe.readyInMinutes }} minutes | {{ recipe.popularity }} likes</i>
+      <br />
+      <i class="fa-duotone fa-seedling"></i>
+      <i class="fa-duotone fa-salad"></i>
+      <i class="fa-duotone fa-wheat-slash"></i>
+    </div>
+  </div>
+  <!-- </router-link> -->
 </template>
 
 <script>
+import RecipePreviewImageVue from "./RecipePreviewImage.vue";
 export default {
-  mounted() {
-    this.axios.get(this.recipe.image).then((i) => {
-      this.image_load = true;
-    });
+  name: "RecipePreview",
+  props: {
+    recipe: { type: Object, required: true },
   },
   data() {
-    return {
-      image_load: false
-    };
+    return {};
   },
-  props: {
-    recipe: {
-      type: Object,
-      required: true
-    }
-
-    // id: {
-    //   type: Number,
-    //   required: true
-    // },
-    // title: {
-    //   type: String,
-    //   required: true
-    // },
-    // readyInMinutes: {
-    //   type: Number,
-    //   required: true
-    // },
-    // image: {
-    //   type: String,
-    //   required: true
-    // },
-    // aggregateLikes: {
-    //   type: Number,
-    //   required: false,
-    //   default() {
-    //     return undefined;
-    //   }
-    // }
-  }
+  components: {
+    RecipePreviewImageVue,
+  },
 };
 </script>
 
 <style scoped>
-.recipe-preview {
-  display: inline-block;
-  width: 90%;
-  height: 100%;
-  position: relative;
-  margin: 10px 10px;
+.container {
 }
-.recipe-preview > .recipe-body {
+.image-container {
+  border: 3px solid rgb(0, 0, 0);
   width: 100%;
-  height: 200px;
-  position: relative;
+  height: 80%;
 }
 
-.recipe-preview .recipe-body .recipe-image {
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: auto;
-  margin-bottom: auto;
-  display: block;
-  width: 98%;
-  height: auto;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  background-size: cover;
+.content-container {
+  border: 2px solid red;
+  height: 20%;
 }
-
-.recipe-preview .recipe-footer {
-  width: 100%;
-  height: 50%;
-  overflow: hidden;
-}
-
-.recipe-preview .recipe-footer .recipe-title {
-  padding: 10px 10px;
-  width: 100%;
-  font-size: 12pt;
-  text-align: left;
-  white-space: nowrap;
-  overflow: hidden;
-  -o-text-overflow: ellipsis;
+.truncate-long-texts {
   text-overflow: ellipsis;
+  overflow: hidden;
+  width: 160px;
+  height: 1.2em;
+  white-space: nowrap;
+}
+.truncate-long-texts:hover {
+  text-overflow: clip;
+  overflow: unset;
+  width: 160px;
+  height: 1.2em;
+  white-space: initial;
 }
 
-.recipe-preview .recipe-footer ul.recipe-overview {
-  padding: 5px 10px;
-  width: 100%;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-flex: 1;
-  -moz-box-flex: 1;
-  -o-box-flex: 1;
-  box-flex: 1;
-  -webkit-flex: 1 auto;
-  -ms-flex: 1 auto;
-  flex: 1 auto;
-  table-layout: fixed;
-  margin-bottom: 0px;
-}
-
-.recipe-preview .recipe-footer ul.recipe-overview li {
-  -webkit-box-flex: 1;
-  -moz-box-flex: 1;
-  -o-box-flex: 1;
-  -ms-box-flex: 1;
-  box-flex: 1;
-  -webkit-flex-grow: 1;
-  flex-grow: 1;
-  width: 90px;
-  display: table-cell;
-  text-align: center;
+.overflow-information {
+  overflow: hidden;
+  display: inline-block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 150px;
 }
 </style>

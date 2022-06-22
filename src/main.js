@@ -5,9 +5,11 @@ import axios from "axios";
 
 import routes from "./routes";
 import VueRouter from "vue-router";
+import * as mdb from 'mdb-ui-kit'; // lib
+import { Input } from 'mdb-ui-kit'; // module
 Vue.use(VueRouter);
 const router = new VueRouter({
-  routes,
+  routes
 });
 
 import Vuelidate from "vuelidate";
@@ -23,8 +25,9 @@ import {
   FormSelectPlugin,
   AlertPlugin,
   ToastPlugin,
-  LayoutPlugin,
+  LayoutPlugin
 } from "bootstrap-vue";
+
 [
   FormGroupPlugin,
   FormPlugin,
@@ -35,32 +38,33 @@ import {
   FormSelectPlugin,
   AlertPlugin,
   ToastPlugin,
-  LayoutPlugin,
+  LayoutPlugin
 ].forEach((x) => Vue.use(x));
 Vue.use(Vuelidate);
 
-axios.interceptors.request.use(
-  function(config) {
-    // Do something before request is sent
-    return config;
-  },
-  function(error) {
-    // Do something with request error
-    return Promise.reject(error);
-  }
-);
-
-// Add a response interceptor
-axios.interceptors.response.use(
-  function(response) {
-    // Do something with response data
-    return response;
-  },
-  function(error) {
-    // Do something with response error
-    return Promise.reject(error);
-  }
-);
+/* middleware */
+// axios.interceptors.request.use(
+//   function(config) {
+//     // Do something before request is sent
+//     return config;
+//   },
+//   function(error) {
+//     // Do something with request error
+//     return Promise.reject(error);
+//   }
+// );
+//
+// // Add a response interceptor
+// axios.interceptors.response.use(
+//   function(response) {
+//     // Do something with response data
+//     return response;
+//   },
+//   function(error) {
+//     // Do something with response error
+//     return Promise.reject(error);
+//   }
+// );
 
 Vue.use(VueAxios, axios);
 
@@ -77,7 +81,7 @@ const shared_data = {
     console.log("logout");
     localStorage.removeItem("username");
     this.username = undefined;
-  },
+  }
 };
 console.log(shared_data);
 // Vue.prototype.$root.store = shared_data;
@@ -86,7 +90,7 @@ new Vue({
   router,
   data() {
     return {
-      store: shared_data,
+      store: shared_data
     };
   },
   methods: {
@@ -97,9 +101,9 @@ new Vue({
         variant: variant,
         solid: true,
         appendToast: append,
-        autoHideDelay: 3000,
+        autoHideDelay: 3000
       });
-    },
+    }
   },
-  render: (h) => h(App),
+  render: (h) => h(App)
 }).$mount("#app");
