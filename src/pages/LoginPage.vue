@@ -60,9 +60,7 @@ export default {
     },
     async Login() {
       try {
-        const response = await this.axios.post(
-          // this.$root.store.server_domain +
-          "http://127.0.0.1:80/Login",
+        const response = await this.axios.post("Login",
           {
             userName: this.form.username,
             password: this.form.password

@@ -26,10 +26,7 @@ export default {
   methods: {
     async GetRandomRecipes() {
       try {
-        const response = await this.axios.get(
-          // this.$root.store.server_domain +
-          "http://127.0.0.1:80/recipes/random/3"
-        );
+        const response = await this.axios.get("recipes/random/3");
         return response.data;
       } catch (error) {
         console.log(error.message);
@@ -37,10 +34,7 @@ export default {
     },
     async GetLastViewedRecipes() {
       try {
-        const response = await this.axios.get(
-          // this.$root.store.server_domain +
-          "http://127.0.0.1:80/recipes/viewed/3"
-        );
+        const response = await this.axios.get("recipes/viewed/3");
         return response.data;
       } catch (error) {
         console.log(error.message);

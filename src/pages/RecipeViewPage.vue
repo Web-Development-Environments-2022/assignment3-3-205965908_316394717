@@ -49,10 +49,7 @@ export default {
       // response = this.$route.params.response;
 
       try {
-        response = await this.axios.get(
-          // this.$root.store.server_domain +
-          `http://127.0.0.1:80/recipes/${this.$route.params.recipeId}`
-        );
+        response = await this.axios.get(`recipes/${this.$route.params.recipeId}`);
 
         if (response.status !== 200) this.$router.replace("/NotFound");
       } catch (error) {
@@ -101,15 +98,18 @@ export default {
 .wrapper {
   display: flex;
 }
+
 .wrapped {
   width: 50%;
 }
+
 .center {
   display: block;
   margin-left: auto;
   margin-right: auto;
   width: 50%;
 }
+
 /* .recipe-header{
 
 } */

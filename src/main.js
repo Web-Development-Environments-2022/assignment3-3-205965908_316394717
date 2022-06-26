@@ -1,3 +1,4 @@
+require("dotenv").config();
 import Vue from "vue";
 import App from "./App.vue";
 import VueAxios from "vue-axios";
@@ -21,7 +22,7 @@ import {
   IconsPlugin,
   BootstrapVue
 } from "bootstrap-vue";
-import './scss/form-style.scss'
+import "./scss/form-style.scss";
 
 Vue.use(VueRouter);
 const router = new VueRouter({
@@ -43,10 +44,12 @@ Vue.use(Vuelidate);
   BootstrapVue
 ].forEach((x) => Vue.use(x));
 
-const axiosInstance = axios.create({
-  // withCredentials: true
+
+const axiosInstanceAPI = axios.create({
+  baseURL: "http://127.0.0.1",
+  withCredentials: true
 });
-Vue.use(VueAxios, axiosInstance);
+Vue.use(VueAxios, axiosInstanceAPI);
 
 
 /* middleware */
@@ -77,6 +80,7 @@ Vue.config.productionTip = false;
 
 const shared_data = {
   username: localStorage.username,
+  server_domain: "http://127.0.0.1:80",
   login(username) {
     localStorage.setItem("username", username);
     this.username = username;

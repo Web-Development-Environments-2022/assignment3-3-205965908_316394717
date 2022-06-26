@@ -96,7 +96,8 @@
         variant="primary"
         style="width:250px;"
         class="ml-5 w-75"
-        >Register</b-button
+      >Register
+      </b-button
       >
       <div class="mt-2">
         You have an account already?
@@ -181,11 +182,7 @@ export default {
     },
     async Register() {
       try {
-        const response = await this.axios.post(
-          // "https://test-for-3-2.herokuapp.com/user/Register",
-          // this.$root.store.server_domain +
-          "http://127.0.0.1:80/Register",
-
+        const response = await this.axios.post("Register",
           {
             username: this.form.username,
             password: this.form.password

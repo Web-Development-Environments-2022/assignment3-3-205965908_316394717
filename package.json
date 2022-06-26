@@ -12,6 +12,8 @@
     "bootstrap": "^4.6.1",
     "bootstrap-vue": "^2.22.0",
     "core-js": "^3.6.5",
+    "dotenv": "^16.0.1",
+    "env": "^0.0.2",
     "mdb-ui-kit": "^4.2.0",
     "mdb-vue-ui-kit": "^1.14.0",
     "sass": "^1.50.0",

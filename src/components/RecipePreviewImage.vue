@@ -1,24 +1,25 @@
 <template>
-      <img v-if="image_load" :src="imgSrc" alt="Recipe Image" class="image" style="width:100%"  />
+  <img v-if="image_load" :src="imgSrc" alt="Recipe Image" class="image" style="width:100%" />
 
 </template>
 <script>
+import innerAxios from "axios";
+
 export default {
   name: "RecipePreviewImage",
   props: {
-    imgSrc: { type: String, default: "assets/imageNotFound.png" },
-    recipeTitle: { type: String, default: "Not Found" },
+    imgSrc: { type: String, default: "assets/imageNotFound.png" }
   },
   data() {
     return {
-      image_load: false,
+      image_load: false
     };
   },
   mounted() {
-    this.axios.get(this.imgSrc).then((i) => {
+    innerAxios.get(this.imgSrc).then((i) => {
       this.image_load = true;
     });
-  },
+  }
 };
 </script>
 <style scoped>
