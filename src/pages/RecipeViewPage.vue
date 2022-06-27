@@ -38,8 +38,8 @@
       <h2>How to make it?:</h2>
       <p>This meal is for {{ recipe.servings }} servings</p>
 
-      <RecipeIngredients :ingredients="recipe.ingredients"></RecipeIngredients>
-      <RecipeEquipments :equipments="recipe.equipments"></RecipeEquipments>
+      <RecipeIngredients :ingredients="recipe.ingredients || []"></RecipeIngredients>
+      <RecipeEquipments :equipments="recipe.equipments || []"></RecipeEquipments>
       <RecipeInstructions :instructions="recipe.instructions" ></RecipeInstructions>
     </div>
     <div v-else><h1>Recipe Not Found...</h1></div>

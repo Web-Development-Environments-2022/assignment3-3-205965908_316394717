@@ -1,14 +1,12 @@
 <template>
   <div id="equipments-block">
-    <b-container>
-      <h3>Equipments:</h3>
-      <b-row v-for="equipment in equipments" :key="equipment.id" class="list-item">
-        <b-col cols="2">
-          <img :src="'https://spoonacular.com/cdn/equipment_100x100/'+equipment.image" class="list-img">
-        </b-col>
-        <b-col cols="10"><i>{{ equipment.name }}</i></b-col>
-      </b-row>
-    </b-container>
+    <h3>Equipments:</h3>
+    <b-row v-for="equipment in equipments" :key="equipment.id" class="list-item">
+      <b-col cols="2">
+        <img :src="'https://spoonacular.com/cdn/equipment_100x100/'+equipment.image" class="list-img">
+      </b-col>
+      <b-col cols="10"><i>{{ equipment.name }}</i></b-col>
+    </b-row>
     <br>
   </div>
 </template>
