@@ -24,7 +24,45 @@
           Username alpha
         </b-form-invalid-feedback>
       </b-form-group>
+<b-form-group
+        id="input-group-firstName"
+        label-cols-sm="3"
+        label="First name:"
+        label-for="firstName"
+      >
+        <b-form-input
+          id="firstName"
+          v-model="$v.form.firstName.$model"
+          type="text"
+          :state="validateState('firstName')"
+        ></b-form-input>
+        <b-form-invalid-feedback v-if="!$v.form.firstName.required">
+          Firstname is required
+        </b-form-invalid-feedback>
+        <b-form-invalid-feedback v-if="!$v.form.firstName.alpha">
+          Firstname alpha
+        </b-form-invalid-feedback>
+      </b-form-group>
 
+      <b-form-group
+        id="input-group-lastName"
+        label-cols-sm="3"
+        label="Last name:"
+        label-for="lastName"
+      >
+        <b-form-input
+          id="lastName"
+          v-model="$v.form.lastName.$model"
+          type="text"
+          :state="validateState('lastName')"
+        ></b-form-input>
+        <b-form-invalid-feedback v-if="!$v.form.lastName.required">
+          Last name is required
+        </b-form-invalid-feedback>
+        <b-form-invalid-feedback v-if="!$v.form.lastName.alpha">
+          Last name alpha
+        </b-form-invalid-feedback>
+      </b-form-group>
       <b-form-group
         id="input-group-country"
         label-cols-sm="3"
@@ -62,9 +100,12 @@
           For that, your password should be also:
         </b-form-text>
         <b-form-invalid-feedback
-          v-if="$v.form.password.required && !$v.form.password.length"
-        >
+          v-if="$v.form.password.required && !$v.form.password.length">
           Have length between 5-10 characters long
+        </b-form-invalid-feedback>
+        <b-form-invalid-feedback
+          v-if="!$v.form.password.valid">
+          need at least one number and one special letter
         </b-form-invalid-feedback>
       </b-form-group>
 
@@ -89,7 +130,25 @@
           The confirmed password is not equal to the original password
         </b-form-invalid-feedback>
       </b-form-group>
-
+<b-form-group
+        id="input-group-email"
+        label-cols-sm="3"
+        label="Email:"
+        label-for="email"
+      >
+        <b-form-input
+          id="email"
+          v-model="$v.form.email.$model"
+          type="text"
+          :state="validateState('email')"
+        ></b-form-input>
+        <b-form-invalid-feedback v-if="!$v.form.email.required">
+          email is required
+        </b-form-invalid-feedback>
+        <b-form-invalid-feedback v-if="!$v.form.email.email">
+          Not valid email address
+        </b-form-invalid-feedback>
+      </b-form-group>
       <b-button type="reset" variant="danger">Reset</b-button>
       <b-button
         type="submit"
@@ -157,16 +216,35 @@ export default {
         length: (u) => minLength(3)(u) && maxLength(8)(u),
         alpha
       },
+      firstName: {
+        required,
+        length: (u) => minLength(1)(u),
+        alpha
+      },
+      lastName: {
+        required,
+        length: (u) => minLength(1)(u),
+        alpha
+      },
       country: {
         required
       },
       password: {
         required,
+         valid: function(value) {
+        const containsNumber = /[0-9]/.test(value)
+        const containsSpecial = /[#?!@$%^&*-]/.test(value)
+        return containsNumber && containsSpecial
+         },
         length: (p) => minLength(5)(p) && maxLength(10)(p)
       },
       confirmedPassword: {
         required,
         sameAsPassword: sameAs("password")
+      },
+      email: {
+        required,
+       email
       }
     }
   },
