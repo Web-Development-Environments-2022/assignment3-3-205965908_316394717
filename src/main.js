@@ -94,13 +94,14 @@ const shared_data = {
 };
 console.log(shared_data);
 // Vue.prototype.$root.store = shared_data;
-
+new Vue({el:'#layout', data:{showExtend:false}})
 new Vue({
   router,
   data() {
     return {
       store: shared_data
     };
+    
   },
   methods: {
     toast(title, content, variant = null, append = false) {
