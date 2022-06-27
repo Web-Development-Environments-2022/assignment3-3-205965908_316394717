@@ -1,11 +1,11 @@
 <template>
-  <b-modal id="modal-1" title="Create Recipe" hide-footer>
+  <b-modal id="modal-1" title="Create Recipe" class="my-modal" hide-footer>
     <div class="modal-content">
       <div class="modal-body p-4">
         <form>
           <!-- Text input -->
           <div class="form-outline mb-4">
-            <input type="text" id="form6Example3" class="form-control">
+            <input type="text" id="form6Example3" class="form-control" v-model="titleInput">
             <label class="form-label" for="form6Example3" style="margin-left: 0px;">Title</label>
             <div class="form-notch">
               <div class="form-notch-leading" style="width: 9px;"></div>
@@ -17,8 +17,9 @@
           <div class="row mb-4">
             <div class="col">
               <div class="form-outline">
-                <input type="text" id="form6Example1" class="form-control">
-                <label class="form-label" for="form6Example1" style="margin-left: 0px;">Ready In Minutes</label>
+                <input type="text" id="form6Example1" class="form-control" v-model="readyInMinutesInput">
+                <label class="form-label" for="form6Example1" style="margin-left: 0px;">Ready
+                  In Minutes</label>
                 <div class="form-notch">
                   <div class="form-notch-leading" style="width: 9px;"></div>
                   <div class="form-notch-middle" style="width: 103px;"></div>
@@ -28,7 +29,7 @@
             </div>
             <div class="col">
               <div class="form-outline">
-                <input type="text" id="form6Example2" class="form-control">
+                <input type="text" id="form6Example2" class="form-control" v-model="servingInput">
                 <label class="form-label" for="form6Example2" style="margin-left: 0px;">Servings</label>
                 <div class="form-notch">
                   <div class="form-notch-leading" style="width: 9px;"></div>
@@ -45,18 +46,40 @@
             <label class="form-label" for="form6Example4" style="margin-left: 0px;">Ready In Minutes</label>
           <div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 55.2px;"></div><div class="form-notch-trailing"></div></div></div>
        -->
-          <input style="margin-left:30px" type="checkbox" id="Vegetarian" value="Vegetarian"
-                 v-model="checkedNames">
+          <input style="margin-left:30px" type="checkbox" id="Vegetarian" value="Vegetarian" v-model="isVegetarian">
           <label style="margin-left:5px" for="Vegetarian"> Vegetarian </label>
-          <input style="margin-left:50px" type="checkbox" id="Vegan" value="Vegan" v-model="checkedNames">
+          <input style="margin-left:50px" type="checkbox" id="Vegan" value="Vegan" v-model="isVegan">
           <label style="margin-left:5px" for="Vegan"> Vegan </label>
-          <input style="margin-left:50px" type="checkbox" id="GlutenFree" value="GlutenFree"
-                 v-model="checkedNames">
+          <input style="margin-left:50px" type="checkbox" id="GlutenFree" value="Gluten Free" v-model="isGlutenFree">
           <label style="margin-left:5px" for="GlutenFree"> GlutenFree </label>
           <br>
           <!-- <span>Checked names: {{ checkedNames }}</span> -->
-          <input style="margin-left:30px" type="checkbox" id="family" value="family" v-model="checkedNames">
+          <input style="margin-left:30px" type="checkbox" id="family" value="family" v-model="isFamily">
           <label style="margin-left:5px" for="family"> Family Recipe </label>
+          <div v-if="isFamily === true" class="row mb-4">
+            <div class="col">
+              <div class="form-outline">
+                <input type="text" id="form6Example1" class="form-control" v-model="inventedByInput">
+                <label class="form-label" for="form6Example1" style="margin-left: 0px;">Invented By</label>
+                <div class="form-notch">
+                  <div class="form-notch-leading" style="width: 9px;"></div>
+                  <div class="form-notch-middle" style="width: 80px;"></div>
+                  <div class="form-notch-trailing"></div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-outline">
+                <input type="text" id="form6Example2" class="form-control" v-model="serveDayInput">
+                <label class="form-label" for="form6Example2" style="margin-left: 0px;">Serve Day</label>
+                <div class="form-notch">
+                  <div class="form-notch-leading" style="width: 9px;"></div>
+                  <div class="form-notch-middle" style="width: 60px;"></div>
+                  <div class="form-notch-trailing"></div>
+                </div>
+              </div>
+            </div>
+          </div>
           <!-- Number input -->
           <!-- <div class="form-outline mb-4">
             <input type="number" id="form6Example6" class="form-control">
@@ -88,12 +111,22 @@ export default {
   name: "ModalCreateRecipe",
   data() {
     return {
-      checkedNames: []
+      titleInput: "",
+      readyInMinutesInput: 0,
+      servingInput: 0,
+      isVegetarian: false,
+      isVegan: false,
+      isGlutenFree: false,
+      isFamily: false,
+      inventedByInput: "",
+      serveDayInput: ""
     };
   }
 };
 </script>
 
 <style scoped>
-
+.my-modal {
+  max-width: 90% !important;
+}
 </style>
