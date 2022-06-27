@@ -1,63 +1,48 @@
 <template>
-  <!-- <router-link
-    :to="{ name: 'recipe', params: { recipeId: recipe.id } }"
-    class="recipe-preview"
-  > -->
-  <!-- <div class="recipe-body">
-      <img v-if="image_load" :src="recipe.image" class="recipe-image" />
-    </div>
-    <div class="recipe-footer">
-      <div :title="recipe.title" class="recipe-title">
-        {{ recipe.title }}
+  <router-link
+    :to="{ name: 'recipe', params: { recipeId: recipe.id } }">
+    <div class="container">
+      <div class="image-container">
+        <RecipePreviewImageVue
+          :imgSrc="recipe.image"
+          :recipeTitle="recipe.title"
+        />
       </div>
-      <ul class="recipe-overview">
-        <li>{{ recipe.readyInMinutes }} minutes</li>
-        <li>{{ recipe.popularity }} likes</li>
-      </ul>
-    </div> -->
+      <div class="content-container">
+        <div class="truncate-long-texts">
+          <strong>{{ recipe.title }}</strong>
+        </div>
+        <br />
+        <table class="ml-auto mr-auto">
+          <tr>
+            <td><i class="fa fa-clock"></i><i> {{ recipe.readyInMinutes }} minutes</i></td>
+            <td>&nbsp;&nbsp;</td>
+            <td><i class="fa fa-thumbs-o-up" aria-hidden="true"></i><i> {{ recipe.popularity }} likes</i></td>
+          </tr>
+        </table>
+        <table class="ml-auto mr-auto">
+          <tr>
+            <td><i class="fa-solid fa-seedling"></i><i> {{ recipe.vegan }}</i></td>
+            <td>&nbsp;&nbsp;</td>
+            <td><i class="fas fa-fish"></i><i> {{ recipe.vegetarian }}</i></td>
+            <td>&nbsp;&nbsp;</td>
+            <td><i class="fa-solid fa-wheat-awn-circle-exclamation"></i><i> {{ recipe.glutenFree }}</i></td>
+          </tr>
+          <tr>
+            <td>
+              <i v-if="recipe.hasViewed === true" class="fa-solid fa-eye"></i>
+              <i v-else class="fa-solid fa-eye-slash"></i>
+            </td>
+            <td>&nbsp;&nbsp;</td>
+            <td>
+              <i v-if="recipe.isFavorite === true" class="fa-solid fa-star"></i>
+            </td>
+          </tr>
+        </table>
 
-  <div class="container">
-    <div class="image-container">
-      <RecipePreviewImageVue
-        :imgSrc="recipe.image"
-        :recipeTitle="recipe.title"
-      />
-    </div>
-    <div class="content-container">
-      <div class="truncate-long-texts">
-        <strong>{{ recipe.title }}</strong>
       </div>
-      <br />
-      <table class="ml-auto mr-auto">
-        <tr>
-          <td><i class="fa fa-clock"></i><i> {{ recipe.readyInMinutes }} minutes</i></td>
-          <td>&nbsp;&nbsp;</td>
-          <td><i class="fa fa-thumbs-o-up" aria-hidden="true"></i><i> {{ recipe.popularity }} likes</i></td>
-        </tr>
-      </table>
-      <table class="ml-auto mr-auto">
-        <tr>
-          <td><i class="fa-solid fa-seedling"></i><i> {{ recipe.vegan }}</i></td>
-          <td>&nbsp;&nbsp;</td>
-          <td><i class="fas fa-fish"></i><i> {{ recipe.vegetarian }}</i></td>
-          <td>&nbsp;&nbsp;</td>
-          <td><i class="fa-solid fa-wheat-awn-circle-exclamation"></i><i> {{ recipe.glutenFree }}</i></td>
-        </tr>
-        <tr>
-          <td>
-            <i v-if="recipe.hasViewed === true" class="fa-solid fa-eye"></i>
-            <i v-else class="fa-solid fa-eye-slash"></i>
-          </td>
-          <td>&nbsp;&nbsp;</td>
-          <td>
-            <i v-if="recipe.isFavorite === true" class="fa-solid fa-star"></i>
-          </td>
-        </tr>
-      </table>
-
     </div>
-  </div>
-  <!-- </router-link> -->
+  </router-link>
 </template>
 
 <script>
