@@ -2,11 +2,11 @@
   <div class="container">
     <Header title="Search"></Header>
     <form class="form-inline" @submit="Search">
-      <SelectInput title="cuisine" :items="this.ddl.cuisine" v-model="form.cuisine" />
-      <SelectInput title="diet" :items="this.ddl.diet" v-model="form.diet" />
-      <SelectInput title="intolerances" :items="this.ddl.intolerances" v-model="form.intolerances" />
-      <SelectInput title="sort" :items="this.ddl.sort" v-model="form.sort" />
-      <SelectInput title="sortDirection" :items="this.ddl.sortDirection" v-model="form.sortDirection" />
+      <SelectInput title="cuisine" :items="this.ddl.cuisine" @changeValue="(v) => form.cuisine = v" />
+      <SelectInput title="diet" :items="this.ddl.diet" @changeValue="(v) => form.diet = v" />
+      <SelectInput title="intolerances" :items="this.ddl.intolerances" @changeValue="(v) => form.intolerances = v" />
+      <SelectInput title="sort" :items="this.ddl.sort" @changeValue="(v) => form.sort = v" />
+      <SelectInput title="sortDirection" :items="this.ddl.sortDirection" @changeValue="(v) => form.sortDirection = v" />
       <input class="form-control mr-sm-2" type="search" placeholder="Query to search" aria-label="Search"
              v-model="form.query">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
@@ -27,7 +27,7 @@ export default {
       form: {
         query: undefined,
         cuisine: undefined,
-        diet: "TODO",
+        diet: undefined,
         intolerances: undefined,
         sort: undefined,
         sortDirection: undefined
@@ -57,6 +57,9 @@ export default {
         console.log(err.response);
         this.form.submitError = err.response.data.message;
       }
+    },
+    log(value){
+      console.log(value)
     }
   }
 };

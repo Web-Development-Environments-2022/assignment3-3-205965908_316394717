@@ -1,9 +1,7 @@
 <template>
-  <select class="custom-select" :value="modelValue" @change="$emit('update:modelValue', $event.target.value)">
+  <select class="custom-select" v-model="value" @change="changeValue">
     <option value="" selected>{{ title }}</option>
-    <option v-for="x in items" :key="x" :value="x">
-      {{ x }}
-    </option>
+    <option v-for="x in items" :key="x" :value="x">{{ x }}</option>
   </select>
 </template>
 
@@ -12,14 +10,16 @@ export default {
   name: "SelectInput",
   props: {
     title: { type: String, required: true },
-    items: { type: Array, required: true },
-    modelValue : {type: String}
+    items: { type: Array, required: true }
   },
-  emits: ['update:modelValue'],
+  data() {
+    return {
+      value: ""
+    };
+  },
   methods: {
-    emitChange(e) {
-      this.$emit("update:modelValue", e.target.value);
-      console.log("emit"); //TODO : remove
+    changeValue(e) {
+      this.$emit("changeValue", this.value);
     }
   }
 };
