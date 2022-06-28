@@ -2,8 +2,9 @@
        <form>
            <b>Instruction {{instructionCounter}} :</b>
           <div class="form-outline mb-4">
-            <input type="text" id="form6Example3" class="form-control" v-model="step">
             <label class="form-label" for="form6Example3" style="margin-left: 0px;">Step</label>
+            <input type="text" id="form6Example3" class="form-control" v-model="step">
+            
             <div class="form-notch">
               <div class="form-notch-leading" style="width: 9px;"></div>
               <div class="form-notch-middle" style="width: 29px;"></div>
@@ -27,7 +28,7 @@ export default {
   props: ['instructionCounter'],
   data() {
     return {
-      step:'',
+      step:"Default Step",
       ingredientComponent: [],
       equipmentComponent: []
     };

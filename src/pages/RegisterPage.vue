@@ -6,8 +6,7 @@
         id="input-group-username"
         label-cols-sm="3"
         label="Username:"
-        label-for="username"
-      >
+        label-for="username">
         <b-form-input
           id="username"
           v-model="$v.form.username.$model"
