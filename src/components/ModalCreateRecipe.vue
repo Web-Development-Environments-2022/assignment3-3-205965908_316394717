@@ -17,7 +17,7 @@
           <div class="row mb-4">
             <div class="col">
               <div class="form-outline">
-                <input type="text" id="form6Example1" class="form-control" v-model="readyInMinutesInput">
+                <input type="number" id="form6Example1" class="form-control" v-model="readyInMinutesInput">
                 <label class="form-label" for="form6Example1" style="margin-left: 0px;">Ready
                   In Minutes</label>
                 <div class="form-notch">
@@ -29,7 +29,7 @@
             </div>
             <div class="col">
               <div class="form-outline">
-                <input type="text" id="form6Example2" class="form-control" v-model="servingInput">
+                <input type="number" id="form6Example2" class="form-control" v-model="servingInput">
                 <label class="form-label" for="form6Example2" style="margin-left: 0px;">Servings</label>
                 <div class="form-notch">
                   <div class="form-notch-leading" style="width: 9px;"></div>
@@ -59,8 +59,8 @@
           <div v-if="isFamily === true" class="row mb-4">
             <div class="col">
               <div class="form-outline">
-                <input type="text" id="form6Example1" class="form-control" v-model="inventedByInput">
-                <label class="form-label" for="form6Example1" style="margin-left: 0px;">Invented By</label>
+                <input type="text" id="form6Example6" class="form-control" v-model="inventedByInput">
+                <label class="form-label" for="form6Example6" style="margin-left: 0px;">Invented By</label>
                 <div class="form-notch">
                   <div class="form-notch-leading" style="width: 9px;"></div>
                   <div class="form-notch-middle" style="width: 80px;"></div>
@@ -70,8 +70,8 @@
             </div>
             <div class="col">
               <div class="form-outline">
-                <input type="text" id="form6Example2" class="form-control" v-model="serveDayInput">
-                <label class="form-label" for="form6Example2" style="margin-left: 0px;">Serve Day</label>
+                <input type="text" id="form6Example7" class="form-control" v-model="serveDayInput">
+                <label class="form-label" for="form6Example7" style="margin-left: 0px;">Serve Day</label>
                 <div class="form-notch">
                   <div class="form-notch-leading" style="width: 9px;"></div>
                   <div class="form-notch-middle" style="width: 60px;"></div>
@@ -99,6 +99,12 @@
             <label class="form-check-label" for="form6Example8"> Create an account? </label>
           </div> -->
           <!-- Submit button -->
+          <!-- <component v-for="field in fields" v-bind:is="field.type" :key="field.id"></component> -->
+          <component v-bind:instructionCounter="index+1" v-for="(InstructionInputModal, index) in instructionComponent" :key="index" :is="InstructionInputModal " />
+          <button  @click="addInstruction" class="btn btn-secondary btn-block">Add Instruction</button>
+          <!-- <InstructionInputModal v-bind:instructionCounter="instructionCounter"></InstructionInputModal> -->
+          <button @click="removeInstruction" class="btn btn-danger btn-block">Remove All Instructions</button>
+          
           <button type="submit" class="btn btn-primary btn-block">Create Recipe</button>
         </form>
       </div>
@@ -107,13 +113,15 @@
 </template>
 
 <script>
+import InstructionInputModal from './InstructionInputModal';
 export default {
   name: "ModalCreateRecipe",
   data() {
     return {
+      instructionComponent: [],
       titleInput: "",
-      readyInMinutesInput: 0,
-      servingInput: 0,
+      readyInMinutesInput: '',
+      servingInput: '',
       isVegetarian: false,
       isVegan: false,
       isGlutenFree: false,
@@ -121,8 +129,17 @@ export default {
       inventedByInput: "",
       serveDayInput: ""
     };
-  }
-};
+  },
+  methods: {
+  	addInstruction ()  {
+    	this.instructionComponent.push(InstructionInputModal)
+
+    },
+    removeInstruction ()  {
+    	this.instructionComponent = []
+    }
+  
+}};
 </script>
 
 <style scoped>
