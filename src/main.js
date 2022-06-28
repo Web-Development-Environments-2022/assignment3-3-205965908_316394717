@@ -1,8 +1,8 @@
 require("dotenv").config();
 import Vue from "vue";
 import App from "./App.vue";
-import VueAxios from "vue-axios";
 import axios from "axios";
+import VueAxios from "vue-axios";
 import routes from "./routes";
 import VueRouter from "vue-router";
 import Vuelidate from "vuelidate";

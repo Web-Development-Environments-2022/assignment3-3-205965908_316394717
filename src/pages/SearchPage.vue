@@ -27,7 +27,7 @@ export default {
       form: {
         query: undefined,
         cuisine: undefined,
-        diet: undefined,
+        diet: "TODO",
         intolerances: undefined,
         sort: undefined,
         sortDirection: undefined
