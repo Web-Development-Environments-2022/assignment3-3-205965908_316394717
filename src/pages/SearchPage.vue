@@ -12,16 +12,19 @@
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
     TEST!!!:{{ form }}
+    <RecipesPreviewShow v-if="recipes.length !== 0" :recipes="this.recipes || []"></RecipesPreviewShow>
   </div>
 </template>
 
 <script>
 import Header from "@/components/Header.vue";
 import SelectInput from "@/components/SelectInput.vue";
+import RecipePreviewList from "@/components/RecipePreviewList";
+import RecipesPreviewShow from "@/components/RecipesPreviewShow";
 
 export default {
   name: "SearchPage",
-  components: { SelectInput, Header },
+  components: { RecipesPreviewShow, SelectInput, Header },
   data() {
     return {
       form: {
@@ -38,28 +41,41 @@ export default {
         intolerances: ["Dairy", "Egg", "Gluten", "Grain", "Peanut", "Seafood", "Sesame", "Shellfish", "Soy", "Sulfite", "Tree Nut", "Wheat"],
         sort: ["popularity", "time"],
         sortDirection: ["asc", "desc"]
-      }
+      },
+      recipes: []
     };
   },
   methods: {
-    async Search(data) {
-      console.log(data);
+    async Search() {
+      Object.keys(this.form).forEach(key => this.form[key] === "" ? this.form[key] = undefined : {});
       const queryParams =
-        {};
+        {
+          query: this.form.query,
+          cuisine: this.form.cuisine,
+          diet: this.form.diet,
+          intolerances: this.form.intolerances,
+          sort: this.form.sortBy,
+          sortDirection: this.form.sortDirection
+        };
+      console.log("queryParams");
+      console.log(queryParams);
       try {
         const response = await this.axios.get("recipes",
           {
             params: queryParams
           }
         );
+        console.log("response");
         console.log(response);
+        this.recipes = response.data;
+        return false;
       } catch (err) {
         console.log(err.response);
         this.form.submitError = err.response.data.message;
       }
     },
-    log(value){
-      console.log(value)
+    log(value) {
+      console.log(value);
     }
   }
 };
