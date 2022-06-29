@@ -12,7 +12,7 @@
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
     <br>
-    <RecipesViewGallery :get-data="getData" :wait="true"></RecipesViewGallery>
+    <RecipesViewGallery v-if="queryParams !== undefined" :get-data="getData" :wait="true"></RecipesViewGallery>
   </div>
 </template>
 
@@ -41,7 +41,7 @@ export default {
         sort: ["popularity", "time"],
         sortDirection: ["asc", "desc"]
       },
-      queryParams: {}
+      queryParams: undefined
     };
   },
   methods: {
@@ -56,8 +56,6 @@ export default {
           sort: this.form.sortBy,
           sortDirection: this.form.sortDirection
         };
-      this.currentPage = 1;
-      await this.getData();
       return false;
     },
     async getData(currentPage, limit) {
@@ -71,33 +69,6 @@ export default {
         console.log(err.response.data.message);
         this.$root.toast("Error", err.response.data.message, "danger");
       }
-    },
-    async goToPage(n) {
-      let prevPage = this.currentPage;
-      if (n === "next")
-        this.currentPage = this.currentPage + 1;
-      else if (n === "prev")
-        this.currentPage = this.currentPage - 1;
-      else {
-        n = parseInt(n);
-        if (n < 1)
-          this.currentPage = 1;
-        else if (n > Math.ceil(this.responseData.totalResults / this.limit))
-          this.currentPage = Math.ceil(this.responseData.totalResults / this.limit);
-        else
-          this.currentPage = n;
-      }
-      if (this.currentPage < 1)
-        this.currentPage = 1;
-      else if (this.currentPage > Math.ceil(this.responseData.totalResults / this.limit)+1)
-        this.currentPage = Math.ceil(this.responseData.totalResults / this.limit);
-      if (prevPage !== this.currentPage)
-        await this.getData();
-    },
-    getNumbersRange() {
-      let start = Math.max(1, this.currentPage - 10);
-      let stop = Math.min(this.currentPage + 10, Math.ceil(this.responseData.totalResults / this.limit));
-      return new Array(stop - start).fill(start).map((n, i) => n + i);
     }
   }
 };

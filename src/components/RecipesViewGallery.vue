@@ -28,7 +28,6 @@ export default {
   components: { RecipesPreviewShow },
   props: {
     getData: { required: true },
-    wait: { type: Boolean, required: true }
   },
   data() {
     return {
@@ -38,8 +37,7 @@ export default {
     };
   },
   async mounted() {
-    if (this.wait === false)
-      this.responseData = await this.getData(this.currentPage, this.limit);
+    this.responseData = await this.getData(this.currentPage, this.limit);
   },
   methods: {
     async goToPage(n) {
@@ -62,7 +60,7 @@ export default {
       else if (this.currentPage > Math.ceil(this.responseData.totalResults / this.limit) + 1)
         this.currentPage = Math.ceil(this.responseData.totalResults / this.limit);
       if (prevPage !== this.currentPage)
-        await this.getData();
+        await this.getData(this.currentPage, this.limit);
     },
     getNumbersRange() {
       let start = Math.max(1, this.currentPage - 10);
