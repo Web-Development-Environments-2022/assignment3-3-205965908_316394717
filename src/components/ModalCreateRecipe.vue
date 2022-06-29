@@ -106,6 +106,7 @@ export default {
     },
     removeInstruction() {
       this.instructionComponent = [];
+      this.$root.store.recipeInformation = {};
     },
     submit() {
       let instructionDict = {};
