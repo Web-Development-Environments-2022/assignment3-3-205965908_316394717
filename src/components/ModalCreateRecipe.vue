@@ -155,14 +155,14 @@ export default {
       let instructionArray = Object.values(instructionDict);
       let myRecipe = {
         title: this.titleInput,
-        readyInMinutes: this.readyInMinutesInput,
+        readyInMinutes: parseInt(this.readyInMinutesInput),
         vegetarian: this.isVegetarian,
         vegan: this.isVegan,
         glutenFree: this.isGlutenFree,
         image: "No Image",
-        servings: this.servingInput,
         inventedBy: this.isFamily ? this.inventedByInput : "",
         serveDay: this.isFamily ? this.serveDayInput : "",
+        servings: parseInt(this.servingInput),
         instructions: instructionArray
       };
       console.log(myRecipe);
