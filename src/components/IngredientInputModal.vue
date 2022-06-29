@@ -39,7 +39,7 @@ export default {
       {
         id: 0,
         amount: 0,
-        amountType: "Default Amount Type"
+        amountType: ""
       };
   },
   data() {

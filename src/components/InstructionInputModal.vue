@@ -35,7 +35,7 @@ export default {
     this.$root.store.recipeInformation[this.dictKey] =
       {
         number: this.instructionCounter,
-        step: "Default Step",
+        step: "",
         ingredients: [],
         equipments: []
       };

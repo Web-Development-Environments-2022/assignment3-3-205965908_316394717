@@ -89,15 +89,15 @@ export default {
   data() {
     return {
       instructionComponent: [],
-      titleInput: "Default Recipe Title",
+      titleInput: "",
       readyInMinutesInput: 0,
       servingInput: 0,
       isVegetarian: false,
       isVegan: false,
       isGlutenFree: false,
       isFamily: false,
-      inventedByInput: "Default Invented By",
-      serveDayInput: "Default Serve Day"
+      inventedByInput: "",
+      serveDayInput: ""
     };
   },
   methods: {
@@ -108,13 +108,22 @@ export default {
       this.instructionComponent = [];
       this.$root.store.recipeInformation = {};
     },
-    submit() {
+    async submit() {
+      if (!this.titleInput || (this.isFamily && (!this.inventedByInput || !this.serveDayInput))) {
+        this.$root.toast("Input Error", "All recipe information fields must fulfill!", "danger");
+        return;
+      }
+
       let instructionDict = {};
       let keys = Object.keys(this.$root.store.recipeInformation);
       keys.forEach(objKey => {
           if (objKey.startsWith("Instruction")) {
             let key = objKey.split("-")[1];
             let value = this.$root.store.recipeInformation[objKey];
+            if (!value.step) {
+              this.$root.toast("Input Error", "All instructions fields must fulfill!", "danger");
+              return;
+            }
             instructionDict[key] = value;
           }
         }
@@ -123,6 +132,10 @@ export default {
           if (objKey.startsWith("Ingredient")) {
             let key = objKey.split("-")[1];
             let value = this.$root.store.recipeInformation[objKey];
+            if (!value.id || !value.amountType) {
+              this.$root.toast("Input Error", "All ingredients fields must fulfill!", "danger");
+              return;
+            }
             instructionDict[key].ingredients.push(value);
           }
         }
@@ -131,23 +144,30 @@ export default {
           if (objKey.startsWith("Equipment")) {
             let key = objKey.split("-")[1];
             let value = this.$root.store.recipeInformation[objKey];
+            if (!value.id) {
+              this.$root.toast("Input Error", "All equipments fields must fulfill!", "danger");
+              return;
+            }
             instructionDict[key].equipments.push(value);
           }
         }
       );
       let instructionArray = Object.values(instructionDict);
-      console.log({
+      let myRecipe = {
         title: this.titleInput,
         readyInMinutes: this.readyInMinutesInput,
         vegetarian: this.isVegetarian,
         vegan: this.isVegan,
         glutenFree: this.isGlutenFree,
-        image: "",
+        image: "No Image",
         servings: this.servingInput,
         inventedBy: this.isFamily ? this.inventedByInput : "",
         serveDay: this.isFamily ? this.serveDayInput : "",
         instructions: instructionArray
-      });
+      };
+      console.log(myRecipe);
+
+      const response = await this.axios.post("recipes", myRecipe);
     }
   }
 };
