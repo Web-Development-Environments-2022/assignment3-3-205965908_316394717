@@ -11,7 +11,7 @@
              v-model="form.query">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
-    TEST!!!:{{ form }}
+    TEST!!!: {{ form }}
     <RecipesPreviewShow v-if="recipes.length !== 0" :recipes="this.recipes || []"></RecipesPreviewShow>
   </div>
 </template>
