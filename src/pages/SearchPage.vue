@@ -14,14 +14,18 @@
     <!--    TEST!!!: {{ form }}-->
     <br>
     <div v-if="responseData.results && responseData.results.length !== 0">
-      <RecipesPreviewShow :recipes="responseData.results"></RecipesPreviewShow>
-
+      <RecipesPreviewShow :recipes="responseData.results" :key="responseData.results[0].id"></RecipesPreviewShow>
+      <br>
       <nav aria-label="Page navigation example">
         <ul class="pagination">
           <li class="page-item"><a class="page-link" @click="goToPage('-1')">Previous</a></li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li v-if="this.currentPage > 10" class="page-item disabled"><a class="page-link">...</a></li>
+          <li v-for="n in getNumbersRange()" :key="n"
+              :class="currentPage === n ? 'page-item active' : 'page-item'">
+            <a class="page-link" @click="goToPage(n)">{{ n }}</a>
+          </li>
+          <li v-if="this.currentPage < Math.floor(this.responseData.totalResults / this.limit) - 9"
+              class="page-item disabled"><a class="page-link">...</a></li>
           <li class="page-item"><a class="page-link" @click="goToPage('0')">Next</a></li>
         </ul>
       </nav>
@@ -32,7 +36,6 @@
 <script>
 import Header from "@/components/Header.vue";
 import SelectInput from "@/components/SelectInput.vue";
-import RecipePreviewList from "@/components/RecipePreviewList";
 import RecipesPreviewShow from "@/components/RecipesPreviewShow";
 
 export default {
@@ -84,19 +87,28 @@ export default {
         params.limit = this.limit;
         const response = await this.axios.get("recipes", { params: params });
         this.responseData = response.data;
+        console.log(response.data);
       } catch (err) {
         console.log(err.response.data.message);
         this.$root.toast("Error", err.response.data.message, "danger");
       }
     },
     async goToPage(n) {
+      let prevPage = this.currentPage;
+      n = parseInt(n);
       if (n === 0)
         this.currentPage = this.currentPage + 1;
       else if (n === -1)
         this.currentPage = this.currentPage - 1;
       else
         this.currentPage = n < 1 ? 1 : n;
-      await this.getData();
+      if (prevPage !== this.currentPage)
+        await this.getData();
+    },
+    getNumbersRange() {
+      let start = Math.max(1, this.currentPage - 10);
+      let stop = Math.min(this.currentPage + 10, Math.floor(this.responseData.totalResults / this.limit) + 1);
+      return new Array(stop - start).fill(start).map((n, i) => n + i);
     }
   }
 };
