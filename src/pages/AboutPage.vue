@@ -45,8 +45,10 @@
               </div>
             </div>
       </div>
-      <div class="website">
-        <h2 class="titles">About The recipes of Grandma and others website</h2>
+      <div class="row my-row">
+      <div class="match-card favoriteMatches backOne card  text-white card-has-bg click-col" style="width: 50rem;">
+      <div class =letter>
+               <h2 class="titles">About The recipes of Grandma and others website</h2>
         <p>
           <ul>
             This Website developed by Elran Oren & Orel Fadlon for Web development enviourments course that belongs to Software and
@@ -65,19 +67,20 @@
             <li>Create new family recipes and watch them my family recipes page.</li>
           </ul>
         </p>
-      </div>
-       
-      <div class="previous">
-        <br>
+            </div>
+            </div>
+      <div class="match-card favoriteMatches backOne card  text-white card-has-bg click-col" style="width: 50rem;">
+      <div class =letter2>
+               <br>
         <h2 class="titles">Previous assignments</h2>
 
           <a href="https://github.com/Web-Development-Environments-2022/205965908"> Web-Ass-1</a><br>
           <a href="https://github.com/Or-Fadlon/PAC-MAN-Game"> PAC-MAN - Web-Ass-2</a><br>
           <!-- <a href="https://app.swaggerhub.com/apis/Daniel-And-Moshe/Web-Ass-3/1.0.0">swaggerhub API Web-Ass-3.1</a><br> -->
           <a href="https://github.com/Web-Development-Environments-2022/assignment3_2-205965908_316394717">Web-Ass-3.2</a><br>
-
-
-      </div>
+            </div>
+            </div>
+            </div>
     </div>
 </template>
 
@@ -95,6 +98,16 @@
     background-image:url('../assets/aboutBackground.jpeg');
     background-size: cover;
     
+}
+.letter{
+  color: rgb(0, 0, 0);
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
+}
+
+.letter2{
+  font-size: 30px;
+  color: rgb(0, 0, 0);
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
 }
 .match-card.abo.card{
     min-height: 210px !important;
@@ -142,6 +155,7 @@ p{
     left: -350px;
     font-size: 17px;
     margin-inline: 50px;
+    
 }
 .elran{
     background-image:url('../assets/Elran.jpg');
@@ -151,6 +165,24 @@ p{
 .backElran{
     background-image:url('../assets/aboutBackground.jpeg');
     background-size:cover;
+    font-size: 22px;
+    border-radius: 10px;
+    padding: 10px;
+    left: 8%;
+    top: 50%;
+    background-color: #293241f3;
+    max-width: 1000px;
+    max-height: 550px;
+    color: rgb(0, 0, 0);
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    background-image:url('../assets/aboutBackground.jpeg');
+    background-size:cover;
+}
+
+.backOne{
+  background-image:url('../assets/aboutBackground.jpeg');
+    background-size:cover;
+    color: rgb(0, 0, 0);
 }
 .orel{
     background-image:url('../assets/Orel.jpg');
@@ -172,7 +204,7 @@ p{
   top:-80px;
 }
 .website{
-    font-size: 22px;
+  font-size: 22px;
   position: absolute;
   border-radius: 10px;
   padding: 10px;
@@ -183,8 +215,8 @@ p{
   max-height: 550px;
   color: rgb(0, 0, 0);
   font-family: "Comic Sans MS", "Comic Sans", cursive;
-      background-image:url('../assets/aboutBackground.jpeg');
-    background-size:cover;
+  background-image:url('../assets/aboutBackground.jpeg');
+  background-size:cover;
 }
 .previous {
     font-size: 22px;
