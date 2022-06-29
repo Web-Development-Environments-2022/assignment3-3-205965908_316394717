@@ -50,6 +50,7 @@
 
 <script>
 import ModalCreateRecipe from "@/components/ModalCreateRecipe";
+
 export default {
   name: "NavBar",
   components: { ModalCreateRecipe },
@@ -59,12 +60,18 @@ export default {
     };
   },
   methods: {
-    Logout() {
-      this.$root.store.logout();
-      this.$root.toast("Logout", "User logged out successfully", "success");
-      this.$router.replace("/").catch(() => {
-        this.$forceUpdate();
-      });
+    async Logout() {
+      try {
+        const response = await this.axios.post("Logout");
+        this.$root.store.logout();
+        this.$root.toast("Logout", "User logged out successfully", "success");
+        this.$router.replace("/").catch(() => {
+          this.$forceUpdate();
+        });
+      } catch (err) {
+        console.log(err.response.data.message);
+        this.$root.toast("Error", err.response.data.message, "danger");
+      }
     },
     DropDownToggle() {
       this.showDropdown = !this.showDropdown;

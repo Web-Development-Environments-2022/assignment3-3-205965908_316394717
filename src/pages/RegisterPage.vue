@@ -23,18 +23,14 @@
           Username alpha
         </b-form-invalid-feedback>
       </b-form-group>
-<b-form-group
+      <b-form-group
         id="input-group-firstName"
         label-cols-sm="3"
         label="First name:"
         label-for="firstName"
       >
-        <b-form-input
-          id="firstName"
-          v-model="$v.form.firstName.$model"
-          type="text"
-          :state="validateState('firstName')"
-        ></b-form-input>
+        <b-form-input id="firstName" v-model="$v.form.firstName.$model" type="text"
+                      :state="validateState('firstName')"></b-form-input>
         <b-form-invalid-feedback v-if="!$v.form.firstName.required">
           Firstname is required
         </b-form-invalid-feedback>
@@ -129,7 +125,7 @@
           The confirmed password is not equal to the original password
         </b-form-invalid-feedback>
       </b-form-group>
-<b-form-group
+      <b-form-group
         id="input-group-email"
         label-cols-sm="3"
         label="Email:"
@@ -149,12 +145,7 @@
         </b-form-invalid-feedback>
       </b-form-group>
       <b-button type="reset" variant="danger">Reset</b-button>
-      <b-button
-        type="submit"
-        variant="primary"
-        style="width:250px;"
-        class="ml-5 w-75"
-      >Register
+      <b-button type="submit" variant="primary" style="width:250px;" class="ml-5 w-75">Register
       </b-button
       >
       <div class="mt-2">
@@ -162,13 +153,7 @@
         <router-link to="login"> Log in here</router-link>
       </div>
     </b-form>
-    <b-alert
-      class="mt-2"
-      v-if="form.submitError"
-      variant="warning"
-      dismissible
-      show
-    >
+    <b-alert class="mt-2" v-if="form.submitError" variant="warning" dismissible show>
       Register failed: {{ form.submitError }}
     </b-alert>
     <!-- <b-card class="mt-3 md-3" header="Form Data Result">
@@ -230,11 +215,11 @@ export default {
       },
       password: {
         required,
-         valid: function(value) {
-        const containsNumber = /[0-9]/.test(value)
-        const containsSpecial = /[#?!@$%^&*-]/.test(value)
-        return containsNumber && containsSpecial
-         },
+        valid: function(value) {
+          const containsNumber = /[0-9]/.test(value);
+          const containsSpecial = /[#?!@$%^&*-]/.test(value);
+          return containsNumber && containsSpecial;
+        },
         length: (p) => minLength(5)(p) && maxLength(10)(p)
       },
       confirmedPassword: {
@@ -243,14 +228,12 @@ export default {
       },
       email: {
         required,
-       email
+        email
       }
     }
   },
   mounted() {
-    // console.log("mounted");
     this.countries.push(...countries);
-    // console.log($v);
   },
   methods: {
     validateState(param) {
@@ -261,24 +244,25 @@ export default {
       try {
         const response = await this.axios.post("Register",
           {
-            username: this.form.username,
-            password: this.form.password
+            userName: this.form.username,
+            firstName: this.form.firstName,
+            lastName: this.form.lastName,
+            country: this.form.country,
+            password: this.form.password,
+            email: this.form.email
           }
         );
         this.$router.push("login");
-        // console.log(response);
       } catch (err) {
         console.log(err.response);
         this.form.submitError = err.response.data.message;
       }
     },
     onRegister() {
-      // console.log("register method called");
       this.$v.form.$touch();
       if (this.$v.form.$anyError) {
         return;
       }
-      // console.log("register method go");
       this.Register();
     },
     onReset() {

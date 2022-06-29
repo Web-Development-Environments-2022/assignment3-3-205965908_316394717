@@ -1,39 +1,33 @@
 <template>
-  <div class="overflow-auto">
-    <b-row>
-      <b-col v-for="r in recipesToShow" :key="r.id">
+  <div>
+    <b-row v-for="bulk in recipeBulks" :key="bulk.id" class="mb-10">
+      <b-col v-for="r in bulk" :key="r.id">
         <RecipePreview class="recipePreview" :recipe="r" />
       </b-col>
     </b-row>
-
-    <!-- Use text in props -->
-    <b-pagination-nav
-      :number-of-pages="Math.floor(recipes.length/this.numberInPage)"
-      @click="console.log('click')"
-      @change="console.log('change')"
-      first-text="First"
-      prev-text="Prev"
-      next-text="Next"
-      last-text="Last"
-    ></b-pagination-nav>
   </div>
 </template>
 
 <script>
 import RecipePreview from "@/components/RecipePreview";
+
 export default {
   components: { RecipePreview },
   props: {
-    recipes: { type: Array, required: true },
-    numberInPage: { type: Number, required: false, default:10 }
+    recipes: { type: Array, required: true }
   },
   data() {
     return {
-      recipesToShow: []
+      recipeBulks: []
     };
   },
   mounted() {
-    this.recipesToShow = this.recipes;
+    let numberPerRow = 5;
+    let i = 0;
+    while (i < this.recipes.length) {
+      this.recipeBulks.push(this.recipes.slice(i, i + numberPerRow));
+      i += numberPerRow;
+    }
   }
 };
 </script>
