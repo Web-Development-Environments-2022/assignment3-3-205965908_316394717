@@ -1,3 +1,4 @@
+import About from "./pages/AboutPage";
 import Main from "./pages/MainPage";
 import NotFound from "./pages/NotFoundPage";
 
@@ -6,6 +7,11 @@ const routes = [
     path: "/",
     name: "main",
     component: Main,
+  },
+  {
+    path: "/",
+    name: "about",
+    component: About,
   },
   {
     path: "/register",
