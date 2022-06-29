@@ -1,6 +1,6 @@
 <template>
   <router-link
-    :to="{ name: 'recipe', params: { recipeId: recipe.id } }">
+    :to="{ name: 'recipe', params: { recipeId: recipe.id }, query: inDb ? {source: 'db'} : {} }">
     <div class="container">
       <div class="image-container">
         <RecipePreviewImageVue
@@ -51,7 +51,8 @@ import RecipePreviewImageVue from "./RecipePreviewImage.vue";
 export default {
   name: "RecipePreview",
   props: {
-    recipe: { type: Object, required: true }
+    recipe: { type: Object, required: true },
+    inDb: { required: true }
   },
   data() {
     return {};

@@ -25,13 +25,21 @@
           <i v-if="recipe.glutenFree === true" class="fa-solid fa-check fa-lg"></i>
           <i v-else class="fa-solid fa-x fa-lg"></i>
           <br>
-          <i v-if="recipe.inventedBy !== ''"><strong>This recipe invented by: {{ recipe.inventedBy }}</strong><br></i>
-          <i v-if="recipe.serveDay !== ''"><strong>The recipe serve day is: {{ recipe.serveDay }}</strong><br></i>
+          <i v-if="recipe.inventedBy"><strong>This recipe invented by: {{ recipe.inventedBy }}</strong><br></i>
+          <i v-if="recipe.serveDay"><strong>The recipe serve day is: {{ recipe.serveDay }}</strong><br></i>
 
           <i v-if="recipe.hasViewed === true" class="fa-solid fa-eye fa-lg"></i>
           <i v-else class="fa-solid fa-eye-slash fa-lg"></i>
           <br>
           <i v-if="recipe.isFavorite === true" class="fa-solid fa-star fa-lg"></i><br>
+          <br>
+          <div v-if="$route.query.source !== 'db'">
+            <button v-if="recipe.isFavorite !== true" type="button" class="btn btn-outline-warning"
+                    @click="addToFavorite">Add To Favorite
+            </button>
+            <button v-else type="button" class="btn btn-outline-danger" @click="removeFromFavorite">Remove From Favorite
+            </button>
+          </div>
         </div>
       </div>
       <br>
@@ -40,7 +48,7 @@
 
       <RecipeIngredients :ingredients="recipe.ingredients || []"></RecipeIngredients>
       <RecipeEquipments :equipments="recipe.equipments || []"></RecipeEquipments>
-      <RecipeInstructions :instructions="recipe.instructions" ></RecipeInstructions>
+      <RecipeInstructions :instructions="recipe.instructions"></RecipeInstructions>
     </div>
     <div v-else><h1>Recipe Not Found...</h1></div>
   </div>
@@ -66,7 +74,8 @@ export default {
       // response = this.$route.params.response;
 
       try {
-        response = await this.axios.get(`recipes/${this.$route.params.recipeId}`);
+        let path = this.$route.query.source === "db" ? `recipes/my/${this.$route.params.recipeId}` : `recipes/${this.$route.params.recipeId}`;
+        response = await this.axios.get(path);
         if (response.status !== 200) this.$router.replace("/NotFound");
         this.recipe = response.data;
         console.log(this.recipe);
@@ -107,6 +116,26 @@ export default {
       this.recipe = _recipe;
     } catch (error) {
       console.log(error);
+    }
+  },
+  methods: {
+    async addToFavorite() {
+      try {
+        const response = await this.axios.post("users/favorites", { recipeId: this.recipe.id });
+        this.recipe.isFavorite = true;
+      } catch (err) {
+        console.log(err.response.data.message);
+        this.$root.toast("Error", err.response.data.message, "danger");
+      }
+    },
+    async removeFromFavorite() {
+      try {
+        const response = await this.axios.delete(`users/favorites/${this.recipe.id}`);
+        this.recipe.isFavorite = false;
+      } catch (err) {
+        console.log(err.response.data.message);
+        this.$root.toast("Error", err.response.data.message, "danger");
+      }
     }
   }
 };

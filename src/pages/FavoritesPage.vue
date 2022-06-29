@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <Header title="Favorite Recipes:"></Header>
-    <RecipesViewGallery :get-data="getData" :wait="false"></RecipesViewGallery>
+    <RecipesViewGallery :get-data="getData" :in-db="false"></RecipesViewGallery>
   </div>
 </template>
 

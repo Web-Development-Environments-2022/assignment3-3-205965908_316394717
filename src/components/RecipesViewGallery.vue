@@ -1,6 +1,6 @@
 <template>
   <div v-if="responseData.results && responseData.results.length !== 0">
-    <RecipesPreviewShow :recipes="responseData.results" :key="responseData.results[0].id"></RecipesPreviewShow>
+    <RecipesPreviewShow :recipes="responseData.results" :in-db="inDb" :key="responseData.results[0].id"></RecipesPreviewShow>
     <br>
     <nav aria-label="Page navigation example">
       <ul class="pagination">
@@ -28,6 +28,7 @@ export default {
   components: { RecipesPreviewShow },
   props: {
     getData: { required: true },
+    inDb: { required: true }
   },
   data() {
     return {
