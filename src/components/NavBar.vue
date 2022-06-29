@@ -13,6 +13,9 @@
           <router-link :to="{ name: 'main' }" class="nav-link">Home</router-link>
         </li>
         <li class="nav-item">
+          <router-link :to="{ name: 'about' }" class="nav-link">About</router-link>
+        </li>
+        <li class="nav-item">
           <router-link :to="{ name: 'search' }" class="nav-link">Search</router-link>
         </li>
         <li v-if="$root.store.username" class="nav-item dropdown">
