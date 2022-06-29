@@ -3,7 +3,7 @@
       <h1 style="color:black;">About page</h1>
        <h4 class="titles">Developers Team </h4>
           <div class="row my-row">
-            <div class="match-card favoriteMatches backElran card  text-white card-has-bg click-col" style="width: 20rem;">
+            <div class="match-card favoriteMatches backElran card">
               <div class="card-img-overlay d-flex flex-column">
                 <div class="card-body-back">
                   
@@ -18,20 +18,20 @@
               </div>
             </div>
 
-            <div class="match-card favoriteMatches elran card  text-white card-has-bg click-col" style="width: 20rem;">
+            <div class="match-card favoriteMatches elran card ">
               <div class="card-img-overlay d-flex flex-column">
               </div>
             </div>
 
             
 
-            <div class="match-card favoriteMatches card orel text-white card-has-bg click-col" style="width: 20rem;">
+            <div class="match-card favoriteMatches card orel  " >
                 <div class="card-img-overlay d-flex flex-column">
 
                 </div>
               </div>
 
-              <div class="match-card favoriteMatches backElran card  text-white card-has-bg click-col" style="width: 22rem;">
+              <div class="match-card favoriteMatches backElran card ">
               <div class="card-img-overlay d-flex flex-column">
                 <div class="card-body-back">
                   
@@ -46,7 +46,7 @@
             </div>
       </div>
       <div class="row my-row">
-      <div class="match-card favoriteMatches backOne card  text-white card-has-bg click-col" style="width: 50rem;">
+      <div class="match-card favoriteMatches backOne one card" style="width: 50rem;">
       <div class =letter>
                <h2 class="titles">About The recipes of Grandma and others website</h2>
         <p>
@@ -69,7 +69,7 @@
         </p>
             </div>
             </div>
-      <div class="match-card favoriteMatches backOne card  text-white card-has-bg click-col" style="width: 30rem;">
+      <div class="match-card favoriteMatches backOne card  ">
       <div class =letter2>
                <br>
         <h2 class="titles">Previous assignments</h2>
@@ -105,7 +105,7 @@
 }
 
 .letter2{
-  font-size: 30px;
+  font-size: 15px;
   color: rgb(0, 0, 0);
   font-family: "Comic Sans MS", "Comic Sans", cursive;
 }
@@ -131,10 +131,10 @@ p{
 
 .card-body-back{
   position: relative;
-  top: 180px;
+  top: 160px;
   color: black;
   font-family: "Comic Sans MS", "Comic Sans", cursive;
-  font-size: 22px;
+  font-size: 15px;
 }
 
 .card-img-top {
@@ -149,10 +149,17 @@ p{
   margin-left: 13%;
 }
 .match-card.favoriteMatches.card{
-    min-height: 360px !important;
-    min-width: 100px !important;
+    width: 15rem;
+    height: 13rem;
     left: -350px;
     font-size: 17px;
+    margin-inline: 50px;
+    
+}
+.match-card.favoriteMatches.card.one{
+    height: 23rem;
+    left: -350px;
+    font-size: 15px;
     margin-inline: 50px;
     
 }
@@ -200,7 +207,7 @@ p{
 .card-text{
   text-align: center;
   position: relative;
-  top:-80px;
+  top:-120px;
 }
 .website{
   font-size: 22px;
@@ -232,4 +239,6 @@ p{
     background-image:url('../assets/aboutBackground.jpeg');
     background-size:cover;
 }
+
+
 </style>
