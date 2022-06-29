@@ -12,8 +12,20 @@
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
     <!--    TEST!!!: {{ form }}-->
-    <RecipesPreviewShow v-if="responseData.results && responseData.results.length !== 0"
-                        :recipes="responseData.results || []"></RecipesPreviewShow>
+    <br>
+    <div v-if="responseData.results && responseData.results.length !== 0">
+      <RecipesPreviewShow :recipes="responseData.results"></RecipesPreviewShow>
+
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item"><a class="page-link" @click="goToPage('-1')">Previous</a></li>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item"><a class="page-link" @click="goToPage('0')">Next</a></li>
+        </ul>
+      </nav>
+    </div>
   </div>
 </template>
 
@@ -43,7 +55,8 @@ export default {
         sort: ["popularity", "time"],
         sortDirection: ["asc", "desc"]
       },
-      skip: 0,
+      queryParams: {},
+      currentPage: 1,
       limit: 10,
       responseData: []
     };
@@ -51,31 +64,39 @@ export default {
   methods: {
     async Search() {
       Object.keys(this.form).forEach(key => this.form[key] === "" ? this.form[key] = undefined : {});
-      const queryParams =
+      this.queryParams =
         {
           query: this.form.query,
           cuisine: this.form.cuisine,
           diet: this.form.diet,
           intolerances: this.form.intolerances,
           sort: this.form.sortBy,
-          sortDirection: this.form.sortDirection,
-          skip: this.skip,
-          limit: this.limit
+          sortDirection: this.form.sortDirection
         };
-      console.log("queryParams");
-      console.log(queryParams);
+      this.currentPage = 1;
+      await this.getData();
+      return false;
+    },
+    async getData() {
       try {
-        const response = await this.axios.get("recipes", { params: queryParams }
-        );
+        let params = this.queryParams;
+        params.skip = (this.currentPage - 1) * this.limit;
+        params.limit = this.limit;
+        const response = await this.axios.get("recipes", { params: params });
         this.responseData = response.data;
-        return false;
       } catch (err) {
-        console.log(err.response);
-        this.form.submitError = err.response.data.message;
+        console.log(err.response.data.message);
+        this.$root.toast("Error", err.response.data.message, "danger");
       }
     },
-    log(value) {
-      console.log(value);
+    async goToPage(n) {
+      if (n === 0)
+        this.currentPage = this.currentPage + 1;
+      else if (n === -1)
+        this.currentPage = this.currentPage - 1;
+      else
+        this.currentPage = n < 1 ? 1 : n;
+      await this.getData();
     }
   }
 };
