@@ -2,45 +2,28 @@
   <div class="container">
     <Header title="Search"></Header>
     <form class="form-inline mb-10" @submit="Search">
-      <SelectInput title="cuisine" :items="this.ddl.cuisine" @changeValue="(v) => form.cuisine = v" />
-      <SelectInput title="diet" :items="this.ddl.diet" @changeValue="(v) => form.diet = v" />
-      <SelectInput title="intolerances" :items="this.ddl.intolerances" @changeValue="(v) => form.intolerances = v" />
-      <SelectInput title="sort" :items="this.ddl.sort" @changeValue="(v) => form.sort = v" />
-      <SelectInput title="sortDirection" :items="this.ddl.sortDirection" @changeValue="(v) => form.sortDirection = v" />
+      <SelectInput title="cuisine" :items="ddl.cuisine" @changeValue="(v) => form.cuisine = v" />
+      <SelectInput title="diet" :items="ddl.diet" @changeValue="(v) => form.diet = v" />
+      <SelectInput title="intolerances" :items="ddl.intolerances" @changeValue="(v) => form.intolerances = v" />
+      <SelectInput title="sort" :items="ddl.sort" @changeValue="(v) => form.sort = v" />
+      <SelectInput title="sortDirection" :items="ddl.sortDirection" @changeValue="(v) => form.sortDirection = v" />
       <input class="form-control mr-sm-2" type="search" placeholder="Query to search" aria-label="Search"
              v-model="form.query">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
-    <!--    TEST!!!: {{ form }}-->
     <br>
-    <div v-if="responseData.results && responseData.results.length !== 0">
-      <RecipesPreviewShow :recipes="responseData.results" :key="responseData.results[0].id"></RecipesPreviewShow>
-      <br>
-      <nav aria-label="Page navigation example">
-        <ul class="pagination">
-          <li class="page-item"><a class="page-link" @click="goToPage('-1')">Previous</a></li>
-          <li v-if="this.currentPage > 10" class="page-item disabled"><a class="page-link">...</a></li>
-          <li v-for="n in getNumbersRange()" :key="n"
-              :class="currentPage === n ? 'page-item active' : 'page-item'">
-            <a class="page-link" @click="goToPage(n)">{{ n }}</a>
-          </li>
-          <li v-if="this.currentPage < Math.floor(this.responseData.totalResults / this.limit) - 9"
-              class="page-item disabled"><a class="page-link">...</a></li>
-          <li class="page-item"><a class="page-link" @click="goToPage('0')">Next</a></li>
-        </ul>
-      </nav>
-    </div>
+    <RecipesViewGalery :get-data="getData"></RecipesViewGalery>
   </div>
 </template>
 
 <script>
 import Header from "@/components/Header.vue";
 import SelectInput from "@/components/SelectInput.vue";
-import RecipesPreviewShow from "@/components/RecipesPreviewShow";
+import RecipesViewGalery from "@/components/RecipesViewGalery.Vue";
 
 export default {
   name: "SearchPage",
-  components: { RecipesPreviewShow, SelectInput, Header },
+  components: { RecipesViewGalery, SelectInput, Header },
   data() {
     return {
       form: {
@@ -58,10 +41,7 @@ export default {
         sort: ["popularity", "time"],
         sortDirection: ["asc", "desc"]
       },
-      queryParams: {},
-      currentPage: 1,
-      limit: 10,
-      responseData: []
+      queryParams: {}
     };
   },
   methods: {
@@ -80,14 +60,13 @@ export default {
       await this.getData();
       return false;
     },
-    async getData() {
+    async getData(currentPage, limit) {
       try {
         let params = this.queryParams;
-        params.skip = (this.currentPage - 1) * this.limit;
-        params.limit = this.limit;
+        params.skip = (currentPage - 1) * limit;
+        params.limit = limit;
         const response = await this.axios.get("recipes", { params: params });
-        this.responseData = response.data;
-        console.log(response.data);
+        return response.data;
       } catch (err) {
         console.log(err.response.data.message);
         this.$root.toast("Error", err.response.data.message, "danger");
@@ -95,19 +74,29 @@ export default {
     },
     async goToPage(n) {
       let prevPage = this.currentPage;
-      n = parseInt(n);
-      if (n === 0)
+      if (n === "next")
         this.currentPage = this.currentPage + 1;
-      else if (n === -1)
+      else if (n === "prev")
         this.currentPage = this.currentPage - 1;
-      else
-        this.currentPage = n < 1 ? 1 : n;
+      else {
+        n = parseInt(n);
+        if (n < 1)
+          this.currentPage = 1;
+        else if (n > Math.ceil(this.responseData.totalResults / this.limit))
+          this.currentPage = Math.ceil(this.responseData.totalResults / this.limit);
+        else
+          this.currentPage = n;
+      }
+      if (this.currentPage < 1)
+        this.currentPage = 1;
+      else if (this.currentPage > Math.ceil(this.responseData.totalResults / this.limit)+1)
+        this.currentPage = Math.ceil(this.responseData.totalResults / this.limit);
       if (prevPage !== this.currentPage)
         await this.getData();
     },
     getNumbersRange() {
       let start = Math.max(1, this.currentPage - 10);
-      let stop = Math.min(this.currentPage + 10, Math.floor(this.responseData.totalResults / this.limit) + 1);
+      let stop = Math.min(this.currentPage + 10, Math.ceil(this.responseData.totalResults / this.limit));
       return new Array(stop - start).fill(start).map((n, i) => n + i);
     }
   }
