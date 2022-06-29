@@ -168,6 +168,17 @@ export default {
       console.log(myRecipe);
 
       const response = await this.axios.post("recipes", myRecipe);
+      this.$root.toast("Success!", "Recipe has been created.", "success");
+      this.instructionComponent = [];
+      this.titleInput = "";
+      this.readyInMinutesInput = 0;
+      this.servingInput = 0;
+      this.isVegetarian = false;
+      this.isVegan = false;
+      this.isGlutenFree = false;
+      this.isFamily = false;
+      this.inventedByInput = "";
+      this.serveDayInput = "";
     }
   }
 };
