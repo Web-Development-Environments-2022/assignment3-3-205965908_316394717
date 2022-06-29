@@ -27,7 +27,8 @@ import RecipesPreviewShow from "@/components/RecipesPreviewShow";
 export default {
   components: { RecipesPreviewShow },
   props: {
-    getData: { required: true }
+    getData: { required: true },
+    wait: { type: Boolean, required: true }
   },
   data() {
     return {
@@ -36,8 +37,9 @@ export default {
       responseData: []
     };
   },
-  mounted() {
-    this.responseData = this.getData(this.currentPage, this.limit);
+  async mounted() {
+    if (this.wait === false)
+      this.responseData = await this.getData(this.currentPage, this.limit);
   },
   methods: {
     async goToPage(n) {
@@ -67,7 +69,8 @@ export default {
       let stop = Math.min(this.currentPage + 10, Math.ceil(this.responseData.totalResults / this.limit));
       return new Array(stop - start).fill(start).map((n, i) => n + i);
     }
-  };
+  }
+};
 </script>
 
 <style scoped></style>

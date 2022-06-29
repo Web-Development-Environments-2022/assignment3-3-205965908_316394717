@@ -12,14 +12,14 @@
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
     <br>
-    <RecipesViewGallery :get-data="getData"></RecipesViewGallery>
+    <RecipesViewGallery :get-data="getData" :wait="true"></RecipesViewGallery>
   </div>
 </template>
 
 <script>
 import Header from "@/components/Header.vue";
 import SelectInput from "@/components/SelectInput.vue";
-import RecipesViewGallery from "@/components/RecipesViewGallery.Vue";
+import RecipesViewGallery from "@/components/RecipesViewGallery.vue";
 
 export default {
   name: "SearchPage",

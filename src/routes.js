@@ -1,4 +1,5 @@
 import About from "./pages/AboutPage";
+import Favorite from "./pages/FavoritesPage";
 import Main from "./pages/MainPage";
 import NotFound from "./pages/NotFoundPage";
 
@@ -9,7 +10,7 @@ const routes = [
     component: Main,
   },
   {
-    path: "/",
+    path: "/about",
     name: "about",
     component: About,
   },
@@ -36,7 +37,7 @@ const routes = [
   {
     path: "/favorites",
     name: "favorites",
-    component: () => import("./pages/FavoriteRecipes"),
+    component: Favorite,
   },
   {
     path: "*",

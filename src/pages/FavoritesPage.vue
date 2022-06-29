@@ -1,13 +1,13 @@
 <template>
-  <div>
+  <div class="container">
     <Header title="Favorite Recipes:"></Header>
-    <RecipesViewGallery :get-data="getData"></RecipesViewGallery>
+    <RecipesViewGallery :get-data="getData" :wait="false"></RecipesViewGallery>
   </div>
 </template>
 
 <script>
 import Header from "@/components/Header";
-import RecipesViewGallery from "@/components/RecipesViewGallery.Vue";
+import RecipesViewGallery from "@/components/RecipesViewGallery.vue";
 
 export default {
   components: { RecipesViewGallery, Header },
@@ -18,7 +18,7 @@ export default {
           skip: (currentPage - 1) * limit,
           limit: limit
         };
-        const response = await this.axios.get("favorites", { params: params });
+        const response = await this.axios.get("recipes/favorites", { params: params });
         return response.data;
       } catch (err) {
         console.log(err.response.data.message);

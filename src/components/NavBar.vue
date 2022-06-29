@@ -24,7 +24,7 @@
           <div class="dropdown-menu" v-bind:class="{ show: showDropdown }" aria-labelledby="navbarDropdown">
             <router-link :to="{ name: 'profile' }" class="dropdown-item">Profile</router-link>
             <div class="dropdown-divider"></div>
-            <router-link :to="{ name: 'favorite' }" class="dropdown-item">Favorite</router-link>
+            <router-link :to="{ name: 'favorites' }" class="dropdown-item">Favorite</router-link>
             <router-link :to="{ name: 'family' }" class="dropdown-item">Family</router-link>
           </div>
         </li>
