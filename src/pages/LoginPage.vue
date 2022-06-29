@@ -60,12 +60,7 @@ export default {
     },
     async Login() {
       try {
-        const response = await this.axios.post("Login",
-          {
-            userName: this.form.username,
-            password: this.form.password
-          }
-        );
+        const response = await this.axios.post("Login", { userName: this.form.username, password: this.form.password });
         console.log(response);
         // this.$root.loggedIn = true;
         console.log(this.$root.store.login);

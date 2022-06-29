@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <Header title="Search"></Header>
-    <form class="form-inline" @submit="Search">
+    <form class="form-inline mb-10" @submit="Search">
       <SelectInput title="cuisine" :items="this.ddl.cuisine" @changeValue="(v) => form.cuisine = v" />
       <SelectInput title="diet" :items="this.ddl.diet" @changeValue="(v) => form.diet = v" />
       <SelectInput title="intolerances" :items="this.ddl.intolerances" @changeValue="(v) => form.intolerances = v" />
@@ -11,8 +11,9 @@
              v-model="form.query">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
-    TEST!!!: {{ form }}
-    <RecipesPreviewShow v-if="recipes.length !== 0" :recipes="this.recipes || []"></RecipesPreviewShow>
+    <!--    TEST!!!: {{ form }}-->
+    <RecipesPreviewShow v-if="responseData.results && responseData.results.length !== 0"
+                        :recipes="responseData.results || []"></RecipesPreviewShow>
   </div>
 </template>
 
@@ -42,7 +43,9 @@ export default {
         sort: ["popularity", "time"],
         sortDirection: ["asc", "desc"]
       },
-      recipes: []
+      skip: 0,
+      limit: 10,
+      responseData: []
     };
   },
   methods: {
@@ -55,19 +58,16 @@ export default {
           diet: this.form.diet,
           intolerances: this.form.intolerances,
           sort: this.form.sortBy,
-          sortDirection: this.form.sortDirection
+          sortDirection: this.form.sortDirection,
+          skip: this.skip,
+          limit: this.limit
         };
       console.log("queryParams");
       console.log(queryParams);
       try {
-        const response = await this.axios.get("recipes",
-          {
-            params: queryParams
-          }
+        const response = await this.axios.get("recipes", { params: queryParams }
         );
-        console.log("response");
-        console.log(response);
-        this.recipes = response.data;
+        this.responseData = response.data;
         return false;
       } catch (err) {
         console.log(err.response);
