@@ -3,7 +3,7 @@
       <h1 style="color:black;">About page</h1>
        <h4 class="titles">Developers Team </h4>
           <div class="row my-row">
-            <div class="match-card favoriteMatches backElran card  text-white card-has-bg click-col" style="width: 22rem;">
+            <div class="match-card favoriteMatches backElran card  text-white card-has-bg click-col" style="width: 20rem;">
               <div class="card-img-overlay d-flex flex-column">
                 <div class="card-body-back">
                   
@@ -69,7 +69,7 @@
         </p>
             </div>
             </div>
-      <div class="match-card favoriteMatches backOne card  text-white card-has-bg click-col" style="width: 50rem;">
+      <div class="match-card favoriteMatches backOne card  text-white card-has-bg click-col" style="width: 30rem;">
       <div class =letter2>
                <br>
         <h2 class="titles">Previous assignments</h2>
@@ -144,7 +144,6 @@ p{
 }
 .my-row{
   position: relative;
-  top: 00px;
   left: 300px;
   padding: 10px;
   margin-left: 13%;
