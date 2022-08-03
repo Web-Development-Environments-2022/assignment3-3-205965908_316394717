@@ -1,8 +1,8 @@
 <template>
   <b-container>
     <h3>{{ title }}</h3>
-    <b-row>
-      <b-col v-for="r in recipes" :key="r.id">
+    <b-row v-for="r in recipes" :key="r.id">
+      <b-col>
         <RecipePreview class="recipePreview" :recipe="r" />
       </b-col>
     </b-row>
