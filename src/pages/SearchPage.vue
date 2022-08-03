@@ -2,17 +2,20 @@
   <div class="container">
     <Header title="Search"></Header>
     <form class="form-inline mb-10" @submit="Search">
-      <SelectInput title="cuisine" :items="ddl.cuisine" @changeValue="(v) => form.cuisine = v" />
-      <SelectInput title="diet" :items="ddl.diet" @changeValue="(v) => form.diet = v" />
-      <SelectInput title="intolerances" :items="ddl.intolerances" @changeValue="(v) => form.intolerances = v" />
-      <SelectInput title="sort" :items="ddl.sort" @changeValue="(v) => form.sort = v" />
-      <SelectInput title="sortDirection" :items="ddl.sortDirection" @changeValue="(v) => form.sortDirection = v" />
+      <SelectInput title="cuisine" :selected="form.cuisine" :items="ddl.cuisine"
+                   @changeValue="(v) => form.cuisine = v" />
+      <SelectInput title="diet" :selected="form.diet" :items="ddl.diet" @changeValue="(v) => form.diet = v" />
+      <SelectInput title="intolerances" :selected="form.intolerances" :items="ddl.intolerances"
+                   @changeValue="(v) => form.intolerances = v" />
+      <SelectInput title="sort" :selected="form.sort" :items="ddl.sort" @changeValue="(v) => form.sort = v" />
+      <SelectInput title="sortDirection" :selected="form.sortDirection" :items="ddl.sortDirection"
+                   @changeValue="(v) => form.sortDirection = v" />
       <input class="form-control mr-sm-2" type="search" placeholder="Query to search" aria-label="Search"
              v-model="form.query">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
     <br>
-    <RecipesViewGallery v-if="queryParams !== undefined" :get-data="getData" :wait="true"></RecipesViewGallery>
+    <RecipesViewGallery v-if="queryParams !== undefined" :get-data="getData" in-db="false"></RecipesViewGallery>
   </div>
 </template>
 
@@ -56,6 +59,7 @@ export default {
           sort: this.form.sortBy,
           sortDirection: this.form.sortDirection
         };
+      localStorage.setItem("lastSearch", JSON.stringify(this.queryParams));
       return false;
     },
     async getData(currentPage, limit) {
@@ -70,6 +74,10 @@ export default {
         this.$root.toast("Error", err.response.data.message, "danger");
       }
     }
+  },
+  created() {
+    let last = localStorage.getItem("lastSearch");
+    if (last) this.form = JSON.parse(last);
   }
 };
 </script>

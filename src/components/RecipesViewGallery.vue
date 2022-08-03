@@ -1,12 +1,13 @@
 <template>
   <div v-if="responseData.results && responseData.results.length !== 0">
-    <RecipesPreviewShow :recipes="responseData.results" :in-db="inDb" :key="responseData.results[0].id"></RecipesPreviewShow>
+    <RecipesPreviewShow :recipes="responseData.results" :in-db="inDb"
+                        :key="loadCounter"></RecipesPreviewShow>
     <br>
     <nav aria-label="Page navigation example">
       <ul class="pagination">
         <li class="page-item"><a class="page-link" @click="goToPage('1')">First</a></li>
         <li class="page-item"><a class="page-link" @click="goToPage('prev')">Previous</a></li>
-        <li v-if="currentPage > 10" class="page-item disabled"><a class="page-link">...</a></li>
+        <li v-if="currentPage > 10 + 1" class="page-item disabled"><a class="page-link">...</a></li>
         <li v-for="n in getNumbersRange()" :key="n" :class="currentPage === n ? 'page-item active' : 'page-item'">
           <a class="page-link" @click="goToPage(n)">{{ n }}</a>
         </li>
@@ -16,9 +17,18 @@
         <li class="page-item"><a class="page-link"
                                  @click="goToPage(Math.ceil(responseData.totalResults / limit))">Last</a>
         </li>
+        <li id="limit-title">&nbsp;&nbsp;Limit:</li>
+        <li>
+          <select class="page-link" v-model="limit" @change="goToPage('1', true)">
+            <option :value="5" selected>5</option>
+            <option :value="10">10</option>
+            <option :value="15">15</option>
+          </select>
+        </li>
       </ul>
     </nav>
   </div>
+  <div v-else><h3>No Data To Show...</h3></div>
 </template>
 
 <script>
@@ -33,43 +43,49 @@ export default {
   data() {
     return {
       currentPage: 1,
-      limit: 10,
-      responseData: []
+      limit: 5,
+      responseData: [],
+      loadCounter: 0
     };
   },
   async mounted() {
     this.responseData = await this.getData(this.currentPage, this.limit);
   },
   methods: {
-    async goToPage(n) {
+    async goToPage(n, reload = false) {
       let prevPage = this.currentPage;
       if (n === "next")
         this.currentPage = this.currentPage + 1;
       else if (n === "prev")
         this.currentPage = this.currentPage - 1;
-      else {
-        n = parseInt(n);
-        if (n < 1)
-          this.currentPage = 1;
-        else if (n > Math.ceil(this.responseData.totalResults / this.limit))
-          this.currentPage = Math.ceil(this.responseData.totalResults / this.limit);
-        else
-          this.currentPage = n;
-      }
-      if (this.currentPage < 1)
-        this.currentPage = 1;
-      else if (this.currentPage > Math.ceil(this.responseData.totalResults / this.limit) + 1)
+      else this.currentPage = parseInt(n);
+
+      if (this.currentPage < 1) this.currentPage = 1;
+      else if (this.currentPage > Math.ceil(this.responseData.totalResults / this.limit))
         this.currentPage = Math.ceil(this.responseData.totalResults / this.limit);
-      if (prevPage !== this.currentPage)
-        await this.getData(this.currentPage, this.limit);
+
+      if (prevPage !== this.currentPage || reload) {
+        this.responseData = await this.getData(this.currentPage, this.limit);
+        this.loadCounter++;
+      }
     },
     getNumbersRange() {
       let start = Math.max(1, this.currentPage - 10);
       let stop = Math.min(this.currentPage + 10, Math.ceil(this.responseData.totalResults / this.limit));
-      return new Array(stop - start).fill(start).map((n, i) => n + i);
+      let array = new Array(stop - start + 1).fill(start).map((n, i) => n + i);
+      return array;
     }
   }
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+#limit-title {
+  position: relative;
+  display: block;
+  padding: 0.5rem 0.75rem;
+  margin-left: -1px;
+  line-height: 1.25;
+  color: #007bff;
+}
+</style>
