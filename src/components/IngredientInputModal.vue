@@ -37,7 +37,7 @@ export default {
   created() {
     this.$root.store.recipeInformation[this.dictKey] =
       {
-        id: 0,
+        id: "",
         amount: 0,
         amountType: ""
       };
