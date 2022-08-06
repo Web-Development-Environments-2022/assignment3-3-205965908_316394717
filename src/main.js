@@ -116,15 +116,5 @@ new Vue({
       });
     }
   },
-  async created() {
-    try {
-      let ing = this.axios.get("ingredients");
-      let equ = this.axios.get("equipments");
-      this.$root.store.ingredients = (await ing).data;
-      this.$root.store.equipments = (await equ).data;
-    } catch {
-
-    }
-  },
   render: (h) => h(App)
 }).$mount("#app");
