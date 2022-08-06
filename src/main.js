@@ -81,6 +81,8 @@ Vue.config.productionTip = false;
 const shared_data = {
   username: localStorage.username,
   server_domain: "http://127.0.0.1:80",
+  ingredients: [],
+  equipments: [],
   login(username) {
     localStorage.setItem("username", username);
     this.username = username;
@@ -112,6 +114,16 @@ new Vue({
         appendToast: append,
         autoHideDelay: 3000
       });
+    }
+  },
+  async created() {
+    try {
+      let ing = this.axios.get("ingredients");
+      let equ = this.axios.get("equipments");
+      this.$root.store.ingredients = (await ing).data;
+      this.$root.store.equipments = (await equ).data;
+    } catch {
+
     }
   },
   render: (h) => h(App)

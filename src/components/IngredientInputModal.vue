@@ -3,10 +3,10 @@
     Ingredient {{ ingredientCounter }} :
     <div class="form-outline mb-4">
       <select v-model="$root.store.recipeInformation[dictKey].id">
-        <option disabled value="">Choose Ingredient</option>
-        <option value="1">A</option>
-        <option value="2">B</option>
-        <option value="3">C</option>
+        <option value="" disabled selected>Choose Ingredient</option>
+        <option v-for="ingredient in this.$root.store.ingredients" :value="ingredient.id" :key="ingredient.id">
+          {{ ingredient.name }}
+        </option>
       </select>
     </div>
     <div class="row mb-4">

@@ -68,6 +68,7 @@
           <component v-bind:instructionCounter="index+1" v-for="(InstructionInputModal, index) in instructionComponent"
                      :key="index" :is="InstructionInputModal" />
           <button @click="addInstruction" class="btn btn-secondary btn-block">Add Instruction</button>
+          <br>
           <button @click="removeInstruction" class="btn btn-danger btn-block">Remove All Instructions</button>
 
           <button @click="submit" class="btn btn-primary btn-block">Create Recipe</button>

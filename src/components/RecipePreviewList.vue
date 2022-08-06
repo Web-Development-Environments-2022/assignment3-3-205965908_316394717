@@ -3,7 +3,7 @@
     <h3>{{ title }}</h3>
     <b-row v-for="r in recipes" :key="r.id">
       <b-col>
-        <RecipePreview class="recipePreview" :recipe="r" />
+        <RecipePreview class="recipePreview" :recipe="r"  in-db="false"/>
       </b-col>
     </b-row>
   </b-container>
