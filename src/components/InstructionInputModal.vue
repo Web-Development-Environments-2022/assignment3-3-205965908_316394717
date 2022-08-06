@@ -11,12 +11,12 @@
         <div class="form-notch-trailing"></div>
       </div>
     </div>
-    <component v-bind:ingredientCounter="i+1" :instructionId="instructionCounter"
-               v-for="(IngredientInputModal, i) in ingredientComponent" :key="'I'+ i"
-               :is="IngredientInputModal" />
-    <component v-bind:equipmentCounter="i+1" :instructionId="instructionCounter"
-               v-for="(EquipmentInputModal, i) in equipmentComponent" :key="'E'+ i"
-               :is="EquipmentInputModal" />
+    <component v-for="(IngredientInputModal, i) in ingredientComponent"
+               v-bind:ingredientCounter="i+1" :instructionId="instructionCounter"
+               :key="'I'+ i" :is="IngredientInputModal" />
+    <component v-for="(EquipmentInputModal, i) in equipmentComponent"
+               v-bind:equipmentCounter="i+1" :instructionId="instructionCounter"
+               :key="'E'+ i" :is="EquipmentInputModal" />
     <button @click="addIngredient" class="btn btn-warning btn-block">Add Ingredient</button>
     <button @click="addEquipment" class="btn btn-success btn-block">Add Equipment</button>
     <br>

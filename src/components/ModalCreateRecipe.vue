@@ -101,7 +101,7 @@ export default {
       serveDayInput: ""
     };
   },
-  async created(){
+  async created() {
     try {
       let ing = this.axios.get("ingredients");
       let equ = this.axios.get("equipments");
@@ -178,7 +178,13 @@ export default {
       };
       console.log(myRecipe);
 
-      const response = await this.axios.post("recipes", myRecipe);
+      try {
+        const response = await this.axios.post("recipes", myRecipe);
+      } catch (e) {
+        this.$root.toast("Input Error", e.message, "danger");
+        return;
+      }
+
       this.$root.toast("Success!", "Recipe has been created.", "success");
       this.instructionComponent = [];
       this.titleInput = "";
@@ -190,6 +196,7 @@ export default {
       this.isFamily = false;
       this.inventedByInput = "";
       this.serveDayInput = "";
+      this.removeInstruction();
     }
   }
 };
