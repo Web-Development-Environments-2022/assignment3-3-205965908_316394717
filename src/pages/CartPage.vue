@@ -28,6 +28,7 @@ export default {
   },
   methods: {
     async removed() {
+      //TODO: find the right way to update the view! dont call the removed every time
       let localList = localStorage.getItem("meal list");
       let list = localList === null || localList === "" ? [] : localList.split(";");
       let recipes = [];

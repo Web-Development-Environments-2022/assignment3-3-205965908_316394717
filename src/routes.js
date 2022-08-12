@@ -31,7 +31,7 @@ const routes = [
     name: "cart",
     component: () => import("./pages/CartPage"),
   },{
-    path: "/making",
+    path: "/making/:recipeId",
     name: "making",
     component: () => import("./pages/MakingPage"),
   },

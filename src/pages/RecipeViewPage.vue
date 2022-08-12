@@ -40,11 +40,13 @@
             <button v-else type="button" class="btn btn-outline-danger" @click="removeFromFavorite">Remove From Favorite
             </button>
           </div>
+          <br>
           <div>
-            <button v-if="this.inMealList === true" type="button" class="btn btn-outline-warning"
+            <button v-if="this.inMealList === true" type="button" class="btn btn-outline-danger"
                     @click="removeFromMealList">Remove From Next Meal
             </button>
-            <button v-else type="button" class="btn btn-outline-warning" @click="addToMealList">Add To Next Meal</button>
+            <button v-else type="button" class="btn btn-outline-success" @click="addToMealList">Add To Next Meal
+            </button>
           </div>
         </div>
       </div>

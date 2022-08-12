@@ -1,16 +1,23 @@
 <template>
   <div>
+    <br>
     <b-row>
-        <b-col> <!-- UP-->
-          <b-icon-chevron-double-up @click="pressUp"></b-icon-chevron-double-up>
-        </b-col>
-        <b-col> <!-- DOWN-->
-          <b-icon-chevron-double-down @click="pressDown"></b-icon-chevron-double-down>
-        </b-col>
-      <b-col>
-        <RecipePreviewImage @click="changeRouteToMakingMeal" :imgSrc="item.image" />
+      <b-col cols="1"> <!-- UP-->
+        <b-icon-chevron-double-up @click="pressUp"></b-icon-chevron-double-up>
+        <br>
+        <br>
+        <br>
+        <b-icon-chevron-double-down @click="pressDown"></b-icon-chevron-double-down>
       </b-col>
-      <b-col> {{ item.title }}</b-col>
+      <b-col>
+        <router-link
+          :to="{ name: 'making', params: { recipeId: item.id }, query: inDb === true ? {source: 'db'} : {} }">
+          <RecipePreviewImage @click="changeRouteToMakingMeal" :imgSrc="item.image" />
+        </router-link>
+      </b-col>
+      <router-link :to="{ name: 'making', params: { recipeId: item.id }, query: inDb === true ? {source: 'db'} : {} }">
+        <b-col> {{ item.title }}</b-col>
+      </router-link>
       <b-col>TODO</b-col>
       <b-col>
         <button type="button" class="btn btn-outline-danger" @click="remove">Remove</button>
@@ -43,7 +50,7 @@ export default {
       this.$emit("remove");
     },
 
-    changeRouteToMakingMeal(){//TODO: add vue for specific making meal.
+    changeRouteToMakingMeal() {//TODO: add vue for specific making meal.
       // this.$router.replace("/NotFound");
     }
   }
