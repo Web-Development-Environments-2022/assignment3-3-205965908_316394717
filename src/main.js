@@ -90,8 +90,7 @@ const shared_data = {
   },
   logout() {
     console.log("logout");
-    localStorage.removeItem("username");
-    localStorage.removeItem("lastSearch");
+    localStorage.clear();
     this.username = undefined;
   }
 };
@@ -114,6 +113,43 @@ new Vue({
         appendToast: append,
         autoHideDelay: 3000
       });
+    },
+    isIdInMealList(id, inDb) {
+      let list = localStorage.getItem("meal list");
+      if (list === null) {
+        localStorage.setItem("meal list", "");
+        return false;
+      }
+      let key = `${inDb === true ? "D" : "S"}${id}`;
+      let splitter = list.split(";");
+      for (let i = 0; i < splitter.length; i++) {
+        if (splitter[i] === key) return true;
+      }
+      return false;
+    },
+    addIdToMealList(id, inDb) {
+      if (!this.isIdInMealList(id, inDb)) {
+        let list = localStorage.getItem("meal list");
+        if (list.length != 0) list = list + ";";
+        let key = `${inDb === true ? "D" : "S"}${id}`;
+        list = list + key;
+        localStorage.setItem("meal list", list);
+      }
+    },
+    removeIdFromMealList(id, inDb) {
+      if (this.isIdInMealList(id, inDb)) {
+        let list = localStorage.getItem("meal list");
+        let key = `${inDb === true ? "D" : "S"}${id}`;
+        let splitter = list.split(";");
+        for (let i = 0; i < splitter.length; i++) {
+          if (splitter[i] === key) {
+            splitter.splice(i, 1);
+            break;
+          }
+        }
+        list = splitter.join(";");
+        localStorage.setItem("meal list", list);
+      }
     }
   },
   render: (h) => h(App)

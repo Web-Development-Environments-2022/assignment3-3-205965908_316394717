@@ -40,6 +40,12 @@
             <button v-else type="button" class="btn btn-outline-danger" @click="removeFromFavorite">Remove From Favorite
             </button>
           </div>
+          <div>
+            <button v-if="this.inMealList === true" type="button" class="btn btn-outline-warning"
+                    @click="removeFromMealList">Remove From Meal
+            </button>
+            <button v-else type="button" class="btn btn-outline-warning" @click="addToMealList">Add To Meal</button>
+          </div>
         </div>
       </div>
       <br>
@@ -65,7 +71,8 @@ export default {
   components: { RecipeIngredients, RecipeEquipments, RecipeInstructions, RecipePreviewImage, Header },
   data() {
     return {
-      recipe: null
+      recipe: null,
+      inMealList: false
     };
   },
   async created() {
@@ -84,36 +91,7 @@ export default {
         this.$router.replace("/NotFound");
         return;
       }
-
-      let {
-        analyzedInstructions,
-        instructions,
-        extendedIngredients,
-        aggregateLikes,
-        readyInMinutes,
-        image,
-        title
-      } = response.data;
-
-      let _instructions = analyzedInstructions
-        .map((fstep) => {
-          fstep.steps[0].step = fstep.name + fstep.steps[0].step;
-          return fstep.steps;
-        })
-        .reduce((a, b) => [...a, ...b], []);
-
-      let _recipe = {
-        instructions,
-        _instructions,
-        analyzedInstructions,
-        extendedIngredients,
-        aggregateLikes,
-        readyInMinutes,
-        image,
-        title
-      };
-
-      this.recipe = _recipe;
+      this.inMealList = this.$root.isIdInMealList(this.recipe.id, this.$route.query.source === "db");
     } catch (error) {
       console.log(error);
     }
@@ -136,6 +114,14 @@ export default {
         console.log(err.response.data.message);
         this.$root.toast("Error", err.response.data.message, "danger");
       }
+    },
+    addToMealList() {
+      this.$root.addIdToMealList(this.recipe.id, this.$route.query.source === "db");
+      this.inMealList = true;
+    },
+    removeFromMealList() {
+      this.$root.removeIdFromMealList(this.recipe.id, this.$route.query.source === "db");
+      this.inMealList = false;
     }
   }
 };
