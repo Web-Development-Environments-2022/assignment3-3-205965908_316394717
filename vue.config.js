@@ -7,5 +7,4 @@ module.exports = {
     host: "localhost",
     proxy: "https://spoonacular.com/"
   }
-  // publicPath: process.env.NODE_ENV === "production" ? "/LAB12/" : "/"
 };

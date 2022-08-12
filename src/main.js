@@ -46,7 +46,7 @@ Vue.use(Vuelidate);
 
 
 const axiosInstanceAPI = axios.create({
-  baseURL: "http://127.0.0.1:80",
+  // baseURL: "http://127.0.0.1:80",
   withCredentials: true
 });
 Vue.use(VueAxios, axiosInstanceAPI);
@@ -80,7 +80,7 @@ Vue.config.productionTip = false;
 
 const shared_data = {
   username: localStorage.username,
-  server_domain: "http://127.0.0.1:80",
+  // server_domain: "http://127.0.0.1:80",
   ingredients: [],
   equipments: [],
   login(username) {
