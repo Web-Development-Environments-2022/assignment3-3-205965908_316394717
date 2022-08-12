@@ -42,9 +42,9 @@
           </div>
           <div>
             <button v-if="this.inMealList === true" type="button" class="btn btn-outline-warning"
-                    @click="removeFromMealList">Remove From Meal
+                    @click="removeFromMealList">Remove From Next Meal
             </button>
-            <button v-else type="button" class="btn btn-outline-warning" @click="addToMealList">Add To Meal</button>
+            <button v-else type="button" class="btn btn-outline-warning" @click="addToMealList">Add To Next Meal</button>
           </div>
         </div>
       </div>

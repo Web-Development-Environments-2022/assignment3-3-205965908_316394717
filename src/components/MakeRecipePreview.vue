@@ -1,6 +1,12 @@
 <template>
   <div>
     <b-row>
+        <b-col> <!-- UP-->
+          <b-icon-chevron-double-up @click="pressUp"></b-icon-chevron-double-up>
+        </b-col>
+        <b-col> <!-- DOWN-->
+          <b-icon-chevron-double-down @click="pressDown"></b-icon-chevron-double-down>
+        </b-col>
       <b-col>
         <RecipePreviewImage :imgSrc="item.image" />
       </b-col>
@@ -26,6 +32,14 @@ export default {
   methods: {
     remove() {
       this.$root.removeIdFromMealList(this.item.id, this.inDb);
+      this.$emit("remove");
+    },
+    pressUp() {
+      this.$root.updateMealPosition(this.item.id, this.inDb, true);
+      this.$emit("remove");
+    },
+    pressDown() {
+      this.$root.updateMealPosition(this.item.id, this.inDb, false);
       this.$emit("remove");
     }
   }

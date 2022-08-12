@@ -163,6 +163,27 @@ new Vue({
     removeAllMealList() {
       localStorage.removeItem("meal list");
       this.numberOfItemsInCart = this.getNumberOfItemsInMealList();
+    },
+    updateMealPosition(id, inDb, flag) {
+      if (this.isIdInMealList(id, inDb)) {
+        let list = localStorage.getItem("meal list");
+        let key = `${inDb === true ? "D" : "S"}${id}`;
+        let splitter = list.split(";");
+        if (splitter.length <= 1)
+          return;
+        for (let i = 0; i < splitter.length; i++) {
+          if (splitter[i] === key) {
+            if (flag && i != 0)
+              [splitter[i - 1], splitter[i]] = [splitter[i], splitter[i - 1]];
+            else if (!flag && i != splitter.length - 1)
+              [splitter[i], splitter[i + 1]] = [splitter[i + 1], splitter[i]];
+            break;
+          }
+        }
+        list = splitter.join(";");
+        localStorage.setItem("meal list", list);
+      }
+      this.numberOfItemsInCart = this.getNumberOfItemsInMealList();
     }
   },
   render: (h) => h(App)
