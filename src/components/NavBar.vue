@@ -33,6 +33,9 @@
           <i v-b-modal.modal-1 class="nav-link">Create Recipe</i>
           <ModalCreateRecipe id="modal-1"></ModalCreateRecipe>
         </li>
+        <li class="nav-item">
+          <router-link :to="{ name: 'cart' }" class="nav-link">Cart({{ $root.numberOfItemsInCart }})</router-link>
+        </li>
       </ul>
       <div>
           <span v-if="!$root.store.username"><strong>Hey Guest! </strong>

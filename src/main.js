@@ -91,6 +91,7 @@ const shared_data = {
   logout() {
     console.log("logout");
     localStorage.clear();
+    this.numberOfItemsInCart = 0;
     this.username = undefined;
   }
 };
@@ -100,7 +101,8 @@ new Vue({
   router,
   data() {
     return {
-      store: shared_data
+      store: shared_data,
+      numberOfItemsInCart: this.getNumberOfItemsInMealList()
     };
   },
   methods: {
@@ -135,6 +137,7 @@ new Vue({
         list = list + key;
         localStorage.setItem("meal list", list);
       }
+      this.numberOfItemsInCart = this.getNumberOfItemsInMealList();
     },
     removeIdFromMealList(id, inDb) {
       if (this.isIdInMealList(id, inDb)) {
@@ -150,6 +153,16 @@ new Vue({
         list = splitter.join(";");
         localStorage.setItem("meal list", list);
       }
+      this.numberOfItemsInCart = this.getNumberOfItemsInMealList();
+    },
+    getNumberOfItemsInMealList() {
+      let list = localStorage.getItem("meal list");
+      if (list === null || list === "") return 0;
+      return list.split(";").length;
+    },
+    removeAllMealList() {
+      localStorage.removeItem("meal list");
+      this.numberOfItemsInCart = this.getNumberOfItemsInMealList();
     }
   },
   render: (h) => h(App)
