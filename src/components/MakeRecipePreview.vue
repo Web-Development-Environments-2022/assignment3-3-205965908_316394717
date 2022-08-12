@@ -8,7 +8,7 @@
           <b-icon-chevron-double-down @click="pressDown"></b-icon-chevron-double-down>
         </b-col>
       <b-col>
-        <RecipePreviewImage :imgSrc="item.image" />
+        <RecipePreviewImage @click="changeRouteToMakingMeal" :imgSrc="item.image" />
       </b-col>
       <b-col> {{ item.title }}</b-col>
       <b-col>TODO</b-col>
@@ -41,6 +41,10 @@ export default {
     pressDown() {
       this.$root.updateMealPosition(this.item.id, this.inDb, false);
       this.$emit("remove");
+    },
+
+    changeRouteToMakingMeal(){//TODO: add vue for specific making meal.
+      // this.$router.replace("/NotFound");
     }
   }
 };
