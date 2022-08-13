@@ -3,9 +3,10 @@
     <h3>Ingredients:</h3>
     <div v-if="newServings !== 0">
       <label for="vol">Number of servings: {{ newServings }} &nbsp;&nbsp;</label>
-      <b-form-input type="range" id="vol" name="vol" min="1" :max="Math.max(20, originalServings)" v-model="newServings" />
+      <b-form-input type="range" id="vol" name="vol" min="1" :max="Math.max(20, originalServings)"
+                    v-model="newServings" />
     </div>
-    <b-row v-for="ingredient in ingredients" :key="ingredient.id" class="list-item">
+    <b-row v-for="ingredient in ingredients" :key="`${ingredient.id}-${ingredient.amountType}`" class="list-item">
       <b-col cols="2">
         <img :src="'https://spoonacular.com/cdn/ingredients_100x100/'+ingredient.image" class="list-img">
       </b-col>
