@@ -1,12 +1,18 @@
 <template>
-  <b-container>
-    <h3>{{ title }}</h3>
+  <div>
+    <b-row>
+      <b-col cols="2"></b-col>
+      <b-col>
+        <h3>{{ title }}</h3>
+      </b-col>
+      <b-col cols="2"></b-col>
+    </b-row>
     <b-row v-for="r in recipes" :key="r.id">
       <b-col>
-        <RecipePreview class="recipePreview" :recipe="r"  :in-db="false"/>
+        <RecipePreview class="recipePreview" :recipe="r" :in-db="false" />
       </b-col>
     </b-row>
-  </b-container>
+  </div>
 </template>
 
 <script>

@@ -1,20 +1,37 @@
 <template>
-  <div class="container">
-    <Header title="Main Page"></Header>
-    <b-container>
-      <b-row>
-        <b-col>
-          <RecipePreviewList title="Randome Recipes" :recipes="randomRecipes || []" class="RandomRecipes center" />
-        </b-col>
-        <b-col>
-          <Login v-if="!$root.store.username"></Login>
+  <div>
+    <b-row>
+      <b-col></b-col>
+      <b-col>
+        <Header title="The Recipes Of Grandma"></Header>
+      </b-col>
+      <b-col></b-col>
+    </b-row>
+    <b-row>
+      <b-col cols="3">
+        <RecipePreviewList title="Random Recipes" :recipes="randomRecipes || []" class="RandomRecipes center" />
+      </b-col>
+      <b-col cols="6">
+        <strong>
+          <b-container>
+            <p>Welcome to the best website across the universe for food and recipes!</p>
+            <p>Our website is full of great taste recipes that are just waiting for your next meal.</p>
+            <p>Take a short registration and enjoy the full functionality available on our site.</p>
+            <p>If you are coming to Netanya city, don't forget to visit in the best restaurant in town:</p>
+            <img src="https://images.rest.co.il/Customers/80257072/2d6368774beb41aa91a91ac5c5a4e23f.jpg">
 
-          <RecipePreviewList v-else title="Last Viewed Recipes" :recipes="lastViewedRecipes || []"
-                             :class="{RandomRecipes: true, blur: !$root.store.username, center: true}"
-                             disabled></RecipePreviewList>
-        </b-col>
-      </b-row>
-    </b-container>
+          </b-container>
+        </strong>
+
+      </b-col>
+      <b-col cols="3">
+        <Login v-if="!$root.store.username"></Login>
+
+        <RecipePreviewList v-else title="Last Viewed Recipes" :recipes="lastViewedRecipes || []"
+                           :class="{RandomRecipes: true, blur: !$root.store.username, center: true}"
+                           disabled></RecipePreviewList>
+      </b-col>
+    </b-row>
   </div>
 </template>
 
@@ -59,7 +76,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
+
 .RandomRecipes {
   margin: 10px 0 10px;
 }

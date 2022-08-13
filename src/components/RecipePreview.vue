@@ -1,18 +1,22 @@
 <template>
-  <router-link
-    :to="{ name: 'recipe', params: { recipeId: recipe.id }, query: inDb === true ? {source: 'db'} : {} }">
-    <div class="container">
+  <div class="container">
+    <div class="card">
       <div class="image-container">
-        <RecipePreviewImageVue
-          :imgSrc="recipe.image"
-          :recipeTitle="recipe.title"
-        />
+        <router-link
+          :to="{ name: 'recipe', params: { recipeId: recipe.id }, query: inDb === true ? {source: 'db'} : {} }">
+          <RecipePreviewImageVue
+            :imgSrc="recipe.image"
+            :recipeTitle="recipe.title"
+          />
+        </router-link>
       </div>
       <div class="content-container">
-        <div class="truncate-long-texts">
-          <strong>{{ recipe.title }}</strong>
-        </div>
-        <br />
+        <router-link
+          :to="{ name: 'recipe', params: { recipeId: recipe.id }, query: inDb === true ? {source: 'db'} : {} }">
+          <div>
+            <strong>{{ recipe.title }}</strong>
+          </div>
+        </router-link>
         <table class="ml-auto mr-auto">
           <tr>
             <td><i class="fa fa-clock"></i><i> {{ recipe.readyInMinutes }} minutes</i></td>
@@ -39,10 +43,9 @@
             </td>
           </tr>
         </table>
-
       </div>
     </div>
-  </router-link>
+  </div>
 </template>
 
 <script>
@@ -65,41 +68,26 @@ export default {
 
 <style scoped>
 .container {
+  margin-bottom: 3px;
+}
+
+.card:hover {
+  transform: scale(1.025);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 5px 10px
 }
 
 .image-container {
-  border: 3px solid rgb(0, 0, 0);
+  border-top: 3px solid rgb(0, 0, 0);
+  border-left: 3px solid rgb(0, 0, 0);
+  border-right: 3px solid rgb(0, 0, 0);
   width: 100%;
   height: 80%;
 }
 
 .content-container {
-  border: 2px solid red;
+  border-bottom: 3px solid rgb(0, 0, 0);
+  border-left: 3px solid rgb(0, 0, 0);
+  border-right: 3px solid rgb(0, 0, 0);
   height: 20%;
 }
-
-.truncate-long-texts {
-  text-overflow: ellipsis;
-  overflow: hidden;
-  width: 160px;
-  height: 1.2em;
-  white-space: nowrap;
-}
-
-.truncate-long-texts:hover {
-  text-overflow: clip;
-  overflow: unset;
-  width: 160px;
-  height: 1.2em;
-  white-space: initial;
-}
-
-.overflow-information {
-  overflow: hidden;
-  display: inline-block;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  width: 150px;
-}
 </style>
-<!--Hey-->
