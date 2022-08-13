@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div id="container">
+    <div :class="isDone ? 'done' : 'pend'">
       <RecipeMakingIngreEquip :ingredients="instruction.ingredients || []"
                               :equipments="instruction.equipments || []"></RecipeMakingIngreEquip>
       <h3>{{ instruction.step }}</h3>
@@ -19,13 +19,18 @@ export default {
     return {};
   },
   props: {
-    instruction: { require: true }
+    instruction: { required: true },
+    isDone: { type: Boolean, required: true }
   }
 };
 </script>
 
 <style scoped>
-#container {
-  border: 3px solid rgb(0, 0, 0);
+.pend {
+  border: 5px solid red;
+}
+
+.done {
+  border: 5px solid green;
 }
 </style>

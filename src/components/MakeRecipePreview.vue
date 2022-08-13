@@ -39,8 +39,8 @@ export default {
   components: { RecipePreviewImage },
   name: "MakeRecipePreview",
   props: {
-    item: { require: true },
-    inDb: { type: Boolean, require: true }
+    item: { required: true },
+    inDb: { type: Boolean, required: true }
   },
   data() {
     return {

@@ -9,8 +9,9 @@
       <RecipeEquipments :equipments="recipe.equipments || []"></RecipeEquipments>
 
       <h3>Steps:</h3>
-      <MakeRecipeStep v-for="instruction in recipe.instructions[0].steps" :instruction="instruction"
-                      :key="instruction.number"></MakeRecipeStep>
+      <MakeRecipeStep v-for="(instruction, index) in recipe.instructions[0].steps" :id="`step-${index}`"
+                      :instruction="instruction" :key="instruction.number"
+                      :is-done="index < doneSteps"></MakeRecipeStep>
 
       <footer class="footer">
         <div class="container">
@@ -80,11 +81,13 @@ export default {
       this.doneSteps -= 1;
       if (this.doneSteps < 0) this.doneSteps = 0;
       this.updateStepInLocal();
+      document.getElementById(`step-${this.doneSteps}`)?.scrollIntoView();
     },
     nextStep() {
       this.doneSteps += 1;
       if (this.doneSteps > this.recipe.instructions[0].steps.length) this.doneSteps = this.recipe.instructions[0].steps.length;
       this.updateStepInLocal();
+      document.getElementById(`step-${this.doneSteps}`)?.scrollIntoView();
     },
     updateStepInLocal() {
       let key = `${this.$route.query.source === "db" ? "D" : "S"}${this.recipe.id}`;
