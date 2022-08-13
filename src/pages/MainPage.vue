@@ -54,7 +54,7 @@ export default {
         const response = await this.axios.get("recipes/random/3");
         return response.data;
       } catch (error) {
-        console.log(error.message);
+        this.$root.toast("Input Error", error.message, "danger");
       }
     },
     async GetLastViewedRecipes() {
@@ -62,7 +62,7 @@ export default {
         const response = await this.axios.get("recipes/viewed/3");
         return response.data;
       } catch (error) {
-        console.log(error.message);
+        this.$root.toast("Input Error", error.message, "danger");
       }
     }
   },

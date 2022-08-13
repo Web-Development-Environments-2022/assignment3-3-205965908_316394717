@@ -21,7 +21,6 @@ export default {
         const response = await this.axios.get("recipes/favorites", { params: params });
         return response.data;
       } catch (err) {
-        console.log(err.response.data.message);
         this.$root.toast("Error", err.response.data.message, "danger");
       }
     }

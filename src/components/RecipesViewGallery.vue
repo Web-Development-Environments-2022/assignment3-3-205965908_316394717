@@ -49,11 +49,9 @@ export default {
     };
   },
   async created() {
-    console.log("created");
     this.responseData = await this.getData(this.currentPage, this.limit);
   },
   updated() {
-    console.log("updated");
   },
   methods: {
     async goToPage(n, reload = false) {

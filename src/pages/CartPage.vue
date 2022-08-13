@@ -49,7 +49,6 @@ export default {
         }
       }
       this.itemList = items;
-      console.log(items);
     },
     async removeAll() {
       this.$root.removeAllMealList();

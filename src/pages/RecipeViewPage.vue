@@ -87,15 +87,13 @@ export default {
         response = await this.axios.get(path);
         if (response.status !== 200) this.$router.replace("/NotFound");
         this.recipe = response.data;
-        console.log(this.recipe);
       } catch (error) {
-        console.log("error.response.status", error.response.status);
         this.$router.replace("/NotFound");
         return;
       }
       this.inMealList = this.$root.isIdInMealList(this.recipe.id, this.$route.query.source === "db");
     } catch (error) {
-      console.log(error);
+      this.$root.toast("Input Error", error.message, "danger");
     }
   },
   methods: {
@@ -104,7 +102,6 @@ export default {
         const response = await this.axios.post("users/favorites", { recipeId: this.recipe.id });
         this.recipe.isFavorite = true;
       } catch (err) {
-        console.log(err.response.data.message);
         this.$root.toast("Error", err.response.data.message, "danger");
       }
     },
@@ -113,7 +110,6 @@ export default {
         const response = await this.axios.delete(`users/favorites/${this.recipe.id}`);
         this.recipe.isFavorite = false;
       } catch (err) {
-        console.log(err.response.data.message);
         this.$root.toast("Error", err.response.data.message, "danger");
       }
     },

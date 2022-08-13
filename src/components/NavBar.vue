@@ -75,7 +75,6 @@ export default {
           this.$forceUpdate();
         });
       } catch (err) {
-        console.log(err.response.data.message);
         this.$root.toast("Error", err.response.data.message, "danger");
       }
     },

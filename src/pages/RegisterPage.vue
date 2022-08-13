@@ -254,7 +254,7 @@ export default {
         );
         this.$router.push("login");
       } catch (err) {
-        console.log(err.response);
+        this.$root.toast("Input Error", err.response, "danger");
         this.form.submitError = err.response.data.message;
       }
     },

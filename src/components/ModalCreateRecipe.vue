@@ -180,7 +180,6 @@ export default {
         servings: parseInt(this.servingInput),
         instructions: instructionArray
       };
-      console.log(myRecipe);
 
       try {
         const response = await this.axios.post("recipes", myRecipe);

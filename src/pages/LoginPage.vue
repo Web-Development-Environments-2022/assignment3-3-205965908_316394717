@@ -60,14 +60,11 @@ export default {
     },
     async Login() {
       try {
-        const response = await this.axios.post("Login", { userName: this.form.username, password: this.form.password });
-        console.log(response);
-        // this.$root.loggedIn = true;
-        console.log(this.$root.store.login);
+        await this.axios.post("Login", { userName: this.form.username, password: this.form.password });
         this.$root.store.login(this.form.username);
         this.$router.replace("/");
       } catch (err) {
-        console.log(err.response.data.message);
+        this.$root.toast("Input Error", e.response.data.message, "danger");
         this.form.submitError = err.response.data.message;
       }
     },

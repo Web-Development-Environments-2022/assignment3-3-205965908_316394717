@@ -73,7 +73,6 @@ export default {
       let ls = localStorage.getItem(key);
       if (ls !== null) this.doneSteps = parseInt(ls);
     } catch (error) {
-      console.log("error.response.status", error.response.status);
       this.$router.replace("/NotFound");
     }
   },

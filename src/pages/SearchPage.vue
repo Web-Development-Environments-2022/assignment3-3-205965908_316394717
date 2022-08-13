@@ -52,7 +52,6 @@ export default {
   created() {
     let last = localStorage.getItem("lastSearch");
     if (last) this.form = JSON.parse(last);
-    console.log(this.form);
   },
   methods: {
     async Search() {
@@ -78,7 +77,6 @@ export default {
         const response = await this.axios.get("recipes", { params: params });
         return response.data;
       } catch (err) {
-        console.log(err.response.data.message);
         this.$root.toast("Error", err.response.data.message, "danger");
       }
     }

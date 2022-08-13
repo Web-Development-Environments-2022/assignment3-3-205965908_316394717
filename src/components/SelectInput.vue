@@ -26,7 +26,6 @@ export default {
   },
   mounted() {
     if (this.selected) {
-      console.log(`${this.selected}`);
       document.getElementById(`inputSelect-${this.title}`).value = this.selected;
     }
   }
