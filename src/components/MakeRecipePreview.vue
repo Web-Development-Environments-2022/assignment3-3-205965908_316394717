@@ -1,31 +1,32 @@
 <template>
   <div>
     <br>
-    <b-row>
-      <b-col cols="1"> <!-- UP-->
+    <b-row class="black-border">
+      <b-col cols="1" class="cen"> <!-- UP-->
         <b-icon-chevron-double-up @click="pressUp"></b-icon-chevron-double-up>
-        <br>
-        <br>
-        <br>
+        <br> <br> <br>
         <b-icon-chevron-double-down @click="pressDown"></b-icon-chevron-double-down>
       </b-col>
-      <b-col>
+      <b-col cols="3" class="cen">
         <router-link
           :to="{ name: 'making', params: { recipeId: item.id }, query: inDb === true ? {source: 'db'} : {} }">
           <RecipePreviewImage @click="changeRouteToMakingMeal" :imgSrc="item.image" />
         </router-link>
       </b-col>
-      <router-link :to="{ name: 'making', params: { recipeId: item.id }, query: inDb === true ? {source: 'db'} : {} }">
-        <b-col> {{ item.title }}</b-col>
-      </router-link>
-      <b-col>
+      <b-col cols="3" class="cen">
+        <router-link
+          :to="{ name: 'making', params: { recipeId: item.id }, query: inDb === true ? {source: 'db'} : {} }">
+          {{ item.title }}
+        </router-link>
+      </b-col>
+      <b-col cols="4" class="cen">
         <b-progress height="1.5rem" class="mb-3">
           <b-progress-bar :value="progressVal" variant="success" striped>
             <span><strong>{{ progressText }}</strong></span>
           </b-progress-bar>
         </b-progress>
       </b-col>
-      <b-col>
+      <b-col cols="1" class="cen">
         <button type="button" class="btn btn-outline-danger" @click="remove">Remove</button>
       </b-col>
     </b-row>
@@ -84,4 +85,14 @@ export default {
 };
 
 </script>
-<style scoped></style>
+<style scoped>
+.black-border {
+  border: 2px solid rgb(0, 0, 0);
+  padding-right: 10px;
+}
+
+.cen {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+</style>
