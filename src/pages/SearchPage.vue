@@ -2,20 +2,20 @@
   <div class="container">
     <Header title="Search"></Header>
     <form class="form-inline mb-10" @submit="Search">
-      <SelectInput title="cuisine" :selected="form.cuisine" :items="ddl.cuisine"
+      <SelectInput title="Cuisine" :selected="form.cuisine" :items="ddl.cuisine"
                    @changeValue="(v) => form.cuisine = v" />
-      <SelectInput title="diet" :selected="form.diet" :items="ddl.diet" @changeValue="(v) => form.diet = v" />
-      <SelectInput title="intolerances" :selected="form.intolerances" :items="ddl.intolerances"
+      <SelectInput title="Diet" :selected="form.diet" :items="ddl.diet" @changeValue="(v) => form.diet = v" />
+      <SelectInput title="Intolerances" :selected="form.intolerances" :items="ddl.intolerances"
                    @changeValue="(v) => form.intolerances = v" />
-      <SelectInput title="sort" :selected="form.sort" :items="ddl.sort" @changeValue="(v) => form.sort = v" />
-      <SelectInput title="sortDirection" :selected="form.sortDirection" :items="ddl.sortDirection"
+      <SelectInput title="Sort" :selected="form.sort" :items="ddl.sort" @changeValue="(v) => form.sort = v" />
+      <SelectInput title="Sort Direction" :selected="form.sortDirection" :items="ddl.sortDirection"
                    @changeValue="(v) => form.sortDirection = v" />
       <input class="form-control mr-sm-2" type="search" placeholder="Query to search" aria-label="Search"
              v-model="form.query">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
     <br>
-    <RecipesViewGallery v-if="queryParams !== undefined" :get-data="getData" in-db="false"></RecipesViewGallery>
+    <RecipesViewGallery v-if="queryParams !== undefined" :key="form" :get-data="getData" :in-db="false"></RecipesViewGallery>
   </div>
 </template>
 
@@ -39,7 +39,7 @@ export default {
       },
       ddl: {
         cuisine: ["African", "American", "British", "Cajun", "Caribbean", "Chinese", "Eastern European", "European", "French", "German", "Greek", "Indian", "Irish", "Italian", "Japanese", "Jewish", "Korean", "Latin American", "Mediterranean", "Mexican", "Middle Eastern", "Nordic", "Southern", "Spanish", "Thai", "Vietnamese"],
-        diet: ["TODO", "TODO2", "TODO3"],
+        diet: ["Gluten Free", "Ketogenic", "Vegetarian", "Lacto-Vegetarian", "Ovo-Vegetarian", "Vegan", "Pescetarian", "Paleo", "Primal", "Low FODMAP", "Whole30"],
         intolerances: ["Dairy", "Egg", "Gluten", "Grain", "Peanut", "Seafood", "Sesame", "Shellfish", "Soy", "Sulfite", "Tree Nut", "Wheat"],
         sort: ["popularity", "time"],
         sortDirection: ["asc", "desc"]

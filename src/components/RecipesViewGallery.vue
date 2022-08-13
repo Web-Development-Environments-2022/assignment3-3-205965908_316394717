@@ -38,7 +38,7 @@ export default {
   components: { RecipesPreviewShow },
   props: {
     getData: { required: true },
-    inDb: { required: true }
+    inDb: { type: Boolean, required: true }
   },
   data() {
     return {
@@ -48,7 +48,7 @@ export default {
       loadCounter: 0
     };
   },
-  async mounted() {
+  async created() {
     this.responseData = await this.getData(this.currentPage, this.limit);
   },
   methods: {
