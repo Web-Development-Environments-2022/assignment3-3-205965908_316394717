@@ -147,6 +147,7 @@ new Vue({
         for (let i = 0; i < splitter.length; i++) {
           if (splitter[i] === key) {
             splitter.splice(i, 1);
+            localStorage.removeItem(key);
             break;
           }
         }
@@ -161,6 +162,9 @@ new Vue({
       return list.split(";").length;
     },
     removeAllMealList() {
+      let list = localStorage.getItem("meal list") ?? "";
+      let splitter = list.split(";");
+      splitter.forEach(x => localStorage.removeItem(x));
       localStorage.removeItem("meal list");
       this.numberOfItemsInCart = this.getNumberOfItemsInMealList();
     },
