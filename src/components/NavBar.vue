@@ -39,8 +39,9 @@
       </b-col>
       <b-col cols="3">
         <div style="float: right">
-          <span v-if="!$root.store.username"><strong>Hey Guest! </strong>
+          <span v-if="!$root.store.username"><strong>Hey Guest!  &nbsp;&nbsp;&nbsp;&nbsp;</strong>
             <button class="btn btn-outline-danger my-2 my-sm-0" @click="$router.push('register')">Register</button>
+             &nbsp;
             <button class="btn btn-outline-success my-2 my-sm-0" @click="$router.push('login')">Login</button>
           </span>
           <span v-else> <strong>Hey {{ $root.store.username }}! &nbsp;&nbsp;&nbsp;&nbsp;</strong>
