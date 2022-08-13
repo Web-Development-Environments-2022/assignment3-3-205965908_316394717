@@ -6,6 +6,9 @@
           <div class="form-outline mb-4">
             <label class="form-label" for="form6Example3" style="margin-left: 0px;">Title</label>
             <input type="text" id="form6Example3" class="form-control" v-model="titleInput">
+            <br>
+            <label class="form-label" for="form6Example3" style="margin-left: 0px;">Image Path</label>
+            <input type="text" id="form6Example10" class="form-control" v-model="pictureInput">
             <div class="form-notch">
               <div class="form-notch-leading" style="width: 9px;"></div>
               <div class="form-notch-middle" style="width: 29px;"></div>
@@ -17,7 +20,7 @@
               <div class="form-outline">
                 <label class="form-label" for="form6Example1" style="margin-left: 0px;">Ready In Minutes:
                   {{ readyInMinutesInput }}</label>
-                <input type="range" min="0" max="180" id="form6Example1" class="form-control"
+                <input type="range" min="1" max="180" id="form6Example1" class="form-control"
                        v-model="readyInMinutesInput">
               </div>
             </div>
@@ -25,7 +28,7 @@
               <div class="form-outline">
                 <label class="form-label" for="form6Example2" style="margin-left: 0px;">Servings: {{ servingInput
                   }}</label>
-                <input type="range" min="0" max="20" id="form6Example2" class="form-control" v-model="servingInput">
+                <input type="range" min="1" max="20" id="form6Example2" class="form-control" v-model="servingInput">
               </div>
             </div>
           </div>
@@ -91,8 +94,9 @@ export default {
     return {
       instructionComponent: [],
       titleInput: "",
-      readyInMinutesInput: 0,
-      servingInput: 0,
+      pictureInput: "",
+      readyInMinutesInput: 1,
+      servingInput: 1,
       isVegetarian: false,
       isVegan: false,
       isGlutenFree: false,
@@ -170,7 +174,7 @@ export default {
         vegetarian: this.isVegetarian,
         vegan: this.isVegan,
         glutenFree: this.isGlutenFree,
-        image: "No Image",
+        image: this.pictureInput !== "" ? this.pictureInput : "NoImage.jpg",
         inventedBy: this.isFamily ? this.inventedByInput : "",
         serveDay: this.isFamily ? this.serveDayInput : "",
         servings: parseInt(this.servingInput),
@@ -188,8 +192,9 @@ export default {
       this.$root.toast("Success!", "Recipe has been created.", "success");
       this.instructionComponent = [];
       this.titleInput = "";
-      this.readyInMinutesInput = 0;
-      this.servingInput = 0;
+      this.pictureInput = "";
+      this.readyInMinutesInput = 1;
+      this.servingInput = 1;
       this.isVegetarian = false;
       this.isVegan = false;
       this.isGlutenFree = false;

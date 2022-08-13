@@ -4,6 +4,7 @@
       <b-col v-for="r in bulk" :key="r.id">
         <RecipePreview class="recipePreview" :recipe="r" :in-db="inDb" />
       </b-col>
+      <b-col v-for="index in numberPerRow - bulk.length" :key="`temp-${index}`"></b-col>
     </b-row>
   </div>
 </template>
@@ -19,15 +20,15 @@ export default {
   },
   data() {
     return {
-      recipeBulks: []
+      recipeBulks: [],
+      numberPerRow: 5
     };
   },
   mounted() {
-    let numberPerRow = 5;
     let i = 0;
     while (i < this.recipes.length) {
-      this.recipeBulks.push(this.recipes.slice(i, i + numberPerRow));
-      i += numberPerRow;
+      this.recipeBulks.push(this.recipes.slice(i, i + this.numberPerRow));
+      i += this.numberPerRow;
     }
   }
 };

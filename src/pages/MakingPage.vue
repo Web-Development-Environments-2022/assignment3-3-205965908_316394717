@@ -54,6 +54,7 @@ export default {
   computed: {
     progressVal() {
       if (!this.recipe) return 0;
+      if (this.recipe.instructions[0].steps.length === 0) return 100;
       return (this.doneSteps / this.recipe.instructions[0].steps.length) * 100;
     },
     progressText() {
