@@ -48,7 +48,7 @@
       <div class="row my-row">
       <div class="match-card favoriteMatches backOne one card" style="width: 50rem;">
       <div class =letter>
-               <h2 class="titles">About The recipes of Grandma and others website</h2>
+               <h2 class="titles">About The recipes of Grandma website</h2>
         <p>
           <ul>
             This Website developed by Elran Oren & Orel Fadlon for Web development enviourments course that belongs to Software and
