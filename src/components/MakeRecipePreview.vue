@@ -18,7 +18,13 @@
       <router-link :to="{ name: 'making', params: { recipeId: item.id }, query: inDb === true ? {source: 'db'} : {} }">
         <b-col> {{ item.title }}</b-col>
       </router-link>
-      <b-col>TODO</b-col>
+      <b-col>
+        <b-progress height="1.5rem" class="mb-3">
+          <b-progress-bar :value="progressVal" variant="success" striped>
+            <span><strong>{{ progressText }}</strong></span>
+          </b-progress-bar>
+        </b-progress>
+      </b-col>
       <b-col>
         <button type="button" class="btn btn-outline-danger" @click="remove">Remove</button>
       </b-col>
@@ -35,6 +41,26 @@ export default {
   props: {
     item: { require: true },
     inDb: { type: Boolean, require: true }
+  },
+  data() {
+    return {
+      doneSteps: 0
+    };
+  },
+  created() {
+    let key = `${this.inDb === true ? "D" : "S"}${this.item.id}`;
+    let ls = localStorage.getItem(key);
+    if (ls !== null) this.doneSteps = parseInt(ls);
+  },
+  computed: {
+    progressVal() {
+      if (!this.item) return 0;
+      return (this.doneSteps / this.item.instructions[0].steps.length) * 100;
+    },
+    progressText() {
+      if (!this.item) return "0/0";
+      return `${this.doneSteps} / ${this.item.instructions[0].steps.length}`;
+    }
   },
   methods: {
     remove() {
