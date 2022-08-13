@@ -62,7 +62,7 @@ export default {
           cuisine: this.form.cuisine,
           diet: this.form.diet,
           intolerances: this.form.intolerances,
-          sort: this.form.sortBy,
+          sort: this.form.sort,
           sortDirection: this.form.sortDirection
         };
       localStorage.setItem("lastSearch", JSON.stringify(this.queryParams));
