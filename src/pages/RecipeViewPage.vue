@@ -1,6 +1,7 @@
 <template>
   <div class="container">
-    <div v-if="recipe">
+    <div v-if="isLoading === true"><h3>Loading...</h3></div>
+    <div v-else-if="recipe">
       <Header :title="recipe.title"></Header>
       <div class="wrapper">
         <div class="wrapped">
@@ -74,7 +75,8 @@ export default {
   data() {
     return {
       recipe: null,
-      inMealList: false
+      inMealList: false,
+      isLoading: true
     };
   },
   async created() {
@@ -92,6 +94,7 @@ export default {
         return;
       }
       this.inMealList = this.$root.isIdInMealList(this.recipe.id, this.$route.query.source === "db");
+      this.isLoading = false;
     } catch (error) {
       this.$root.toast("Input Error", error.message, "danger");
     }

@@ -1,5 +1,6 @@
 <template>
-  <div v-if="responseData.results && responseData.results.length !== 0">
+  <div v-if="isLoading === true"><h3>Loading...</h3></div>
+  <div v-else-if="responseData && responseData.results && responseData.results.length !== 0">
     <RecipesPreviewShow :recipes="responseData.results" :in-db="inDb"
                         :key="loadCounter"></RecipesPreviewShow>
     <br>
@@ -28,7 +29,7 @@
       </ul>
     </nav>
   </div>
-  <div v-else><h3>No Data To Show...</h3></div>
+  <div v-else><h3>No data to show</h3></div>
 </template>
 
 <script>
@@ -44,12 +45,14 @@ export default {
     return {
       currentPage: 1,
       limit: 5,
-      responseData: [],
-      loadCounter: 0
+      responseData: {},
+      loadCounter: 0,
+      isLoading: true
     };
   },
   async created() {
     this.responseData = await this.getData(this.currentPage, this.limit);
+    this.isLoading = false;
   },
   updated() {
   },

@@ -2,7 +2,8 @@
   <div class="container">
     <Header :title="recipe ? recipe.title : 'Loading...'"></Header>
 
-    <div v-if="recipe === undefined"><h3>No Data To Show...</h3></div>
+    <div v-if="isLoading === true"><h3>Loading...</h3></div>
+    <div v-else-if="recipe === undefined"><h3>No data to show</h3></div>
     <div v-else>
       <RecipeIngredients :ingredients="recipe.ingredients || []"
                          :originalServings="parseInt(recipe.servings)"></RecipeIngredients>
@@ -48,7 +49,8 @@ export default {
   data() {
     return {
       recipe: undefined,
-      doneSteps: 0
+      doneSteps: 0,
+      isLoading: true
     };
   },
   computed: {
@@ -72,6 +74,7 @@ export default {
       let key = `${this.$route.query.source === "db" ? "D" : "S"}${this.recipe.id}`;
       let ls = localStorage.getItem(key);
       if (ls !== null) this.doneSteps = parseInt(ls);
+      this.isLoading = false;
     } catch (error) {
       this.$router.replace("/NotFound");
     }

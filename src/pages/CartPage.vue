@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <Header title="Your Cart"></Header>
-
-    <div v-if="itemList.length === 0"><h3>No Data To Show...</h3></div>
+    <div v-if="isLoading === true"><h3>Loading...</h3></div>
+    <div v-else-if="itemList.length === 0"><h3>No data to show</h3></div>
     <div v-else>
       <button type="button" class="btn btn-outline-danger" @click="removeAll">Remove All</button>
       <MakeRecipePreview v-for="item in itemList" :key="item.data.id" :item="item.data" :in-db="item.inDb"
@@ -20,11 +20,13 @@ export default {
   name: "Cart",
   data() {
     return {
-      itemList: []
+      itemList: [],
+      isLoading: true
     };
   },
   async created() {
     await this.removed();
+    this.isLoading = false;
   },
   methods: {
     async removed() {
