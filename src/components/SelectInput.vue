@@ -1,6 +1,7 @@
 <template>
-  <select id="inputSelect" class="custom-select" v-model="value" @change="changeValue">
-    <option value="" selected>{{ title }}</option>
+  <select :id="`inputSelect-${title}`" class="custom-select" v-model="value" @change="changeValue">
+    <option v-if="selected" value="">{{ title }}</option>
+    <option v-else value="" selected>{{ title }}</option>
     <option v-for="x in items" :key="x" :value="x">{{ x }}</option>
   </select>
 </template>
@@ -24,9 +25,9 @@ export default {
     }
   },
   mounted() {
-    if (this.selected !== undefined){
+    if (this.selected) {
       console.log(`${this.selected}`);
-      document.getElementById("inputSelect").value = this.selected;
+      document.getElementById(`inputSelect-${this.title}`).value = this.selected;
     }
   }
 };

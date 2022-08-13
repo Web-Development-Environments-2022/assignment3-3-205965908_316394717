@@ -15,7 +15,8 @@
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
     <br>
-    <RecipesViewGallery v-if="queryParams !== undefined" :key="form" :get-data="getData" :in-db="false"></RecipesViewGallery>
+    <RecipesViewGallery v-if="queryParams !== undefined" :key="counterUpdateFlag" :get-data="getData"
+                        :in-db="false"></RecipesViewGallery>
   </div>
 </template>
 
@@ -37,6 +38,7 @@ export default {
         sort: undefined,
         sortDirection: undefined
       },
+      counterUpdateFlag: 0,
       ddl: {
         cuisine: ["African", "American", "British", "Cajun", "Caribbean", "Chinese", "Eastern European", "European", "French", "German", "Greek", "Indian", "Irish", "Italian", "Japanese", "Jewish", "Korean", "Latin American", "Mediterranean", "Mexican", "Middle Eastern", "Nordic", "Southern", "Spanish", "Thai", "Vietnamese"],
         diet: ["Gluten Free", "Ketogenic", "Vegetarian", "Lacto-Vegetarian", "Ovo-Vegetarian", "Vegan", "Pescetarian", "Paleo", "Primal", "Low FODMAP", "Whole30"],
@@ -46,6 +48,11 @@ export default {
       },
       queryParams: undefined
     };
+  },
+  created() {
+    let last = localStorage.getItem("lastSearch");
+    if (last) this.form = JSON.parse(last);
+    console.log(this.form);
   },
   methods: {
     async Search() {
@@ -60,6 +67,7 @@ export default {
           sortDirection: this.form.sortDirection
         };
       localStorage.setItem("lastSearch", JSON.stringify(this.queryParams));
+      this.counterUpdateFlag++;
       return false;
     },
     async getData(currentPage, limit) {
@@ -74,10 +82,6 @@ export default {
         this.$root.toast("Error", err.response.data.message, "danger");
       }
     }
-  },
-  created() {
-    let last = localStorage.getItem("lastSearch");
-    if (last) this.form = JSON.parse(last);
   }
 };
 </script>
