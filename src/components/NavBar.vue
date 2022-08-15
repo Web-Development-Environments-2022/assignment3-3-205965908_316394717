@@ -21,17 +21,17 @@
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                  aria-haspopup="true" aria-expanded="false">My Data</a>
               <div class="dropdown-menu" v-bind:class="{ show: showDropdown }" aria-labelledby="navbarDropdown">
-                <router-link :to="{ name: 'myRecipes' }" class="dropdown-item">My recipes</router-link>
-                <router-link :to="{ name: 'familyRecipes' }" class="dropdown-item">Family</router-link>
+                <router-link :to="{ name: 'myRecipes' }" class="dropdown-item">My Recipes</router-link>
+                <router-link :to="{ name: 'familyRecipes' }" class="dropdown-item">My Family Recipes</router-link>
                 <!--<div class="dropdown-divider"></div>-->
-                <router-link :to="{ name: 'favorites' }" class="dropdown-item">Favorite</router-link>
+                <router-link :to="{ name: 'favorites' }" class="dropdown-item">My Favorite Recipes</router-link>
               </div>
             </li>
             <li v-if="$root.store.username" class="nav-item">
               <i v-b-modal.modal-1 class="nav-link">Create Recipe</i>
               <ModalCreateRecipe id="modal-1"></ModalCreateRecipe>
             </li>
-            <li class="nav-item">
+            <li v-if="$root.store.username" class="nav-item">
               <router-link :to="{ name: 'cart' }" class="nav-link">Cart({{ $root.numberOfItemsInCart }})</router-link>
             </li>
           </ul>
@@ -39,12 +39,12 @@
       </b-col>
       <b-col cols="3">
         <div style="float: right">
-          <span v-if="!$root.store.username"><strong>Hey Guest!  &nbsp;&nbsp;&nbsp;&nbsp;</strong>
-            <button class="btn btn-outline-danger my-2 my-sm-0" @click="$router.push('register')">Register</button>
+          <span v-if="!$root.store.username"><strong>Hello guest  &nbsp;&nbsp;&nbsp;&nbsp;</strong>
+            <button class="btn btn-outline-danger my-2 my-sm-0" @click="$router.push('/register')">Register</button>
              &nbsp;
-            <button class="btn btn-outline-success my-2 my-sm-0" @click="$router.push('login')">Login</button>
+            <button class="btn btn-outline-success my-2 my-sm-0" @click="$router.push('/login')">Login</button>
           </span>
-          <span v-else> <strong>Hey {{ $root.store.username }}! &nbsp;&nbsp;&nbsp;&nbsp;</strong>
+          <span v-else> <strong>Hello {{ $root.store.username }} &nbsp;&nbsp;&nbsp;&nbsp;</strong>
             <button class="btn btn-outline-danger my-2 my-sm-0" @click="Logout">Logout</button>
           </span>
         </div>

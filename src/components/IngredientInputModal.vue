@@ -15,7 +15,7 @@
           <label class="form-label" for="form6Example1" style="margin-left: 0px;">
             Amount: {{ amount }}
           </label>
-          <input type="range" min="0" max="1000" id="form6Example1" class="form-control"
+          <input type="range" min="1" max="1000" id="form6Example1" class="form-control"
                  v-model="amount" @input="update">
         </div>
       </div>
@@ -38,14 +38,14 @@ export default {
     this.$root.store.recipeInformation[this.dictKey] =
       {
         id: "",
-        amount: 0,
+        amount: 1,
         amountType: ""
       };
   },
   data() {
     return {
       dictKey: `Ingredient-${this.instructionId}-${this.ingredientCounter}`,
-      amount: 0
+      amount: 1
     };
   },
   methods: {

@@ -34,20 +34,25 @@
           <br>
           <i v-if="recipe.isFavorite === true" class="fa-solid fa-star fa-lg"></i><br>
           <br>
-          <div v-if="$route.query.source !== 'db'">
-            <button v-if="recipe.isFavorite !== true" type="button" class="btn btn-outline-warning"
-                    @click="addToFavorite">Add To Favorite
-            </button>
-            <button v-else type="button" class="btn btn-outline-danger" @click="removeFromFavorite">Remove From Favorite
-            </button>
-          </div>
-          <br>
-          <div>
-            <button v-if="this.inMealList === true" type="button" class="btn btn-outline-danger"
-                    @click="removeFromMealList">Remove From Next Meal
-            </button>
-            <button v-else type="button" class="btn btn-outline-success" @click="addToMealList">Add To Next Meal
-            </button>
+          <div v-if="$root.store.username">
+            <div v-if="$route.query.source !== 'db'">
+              <button v-if="recipe.isFavorite !== true" type="button" class="btn btn-outline-warning"
+                      @click="addToFavorite">Add To Favorite
+              </button>
+              <button v-else type="button" class="btn btn-outline-danger" @click="removeFromFavorite">Remove From
+                Favorite
+              </button>
+            </div>
+            <br>
+            <div>
+              <button v-if="this.inMealList === true" type="button" class="btn btn-outline-danger"
+                      @click="removeFromMealList">Remove From Next Meal
+              </button>
+              <button v-else type="button" class="btn btn-outline-success" @click="addToMealList">Add To Next Meal
+              </button>
+            </div>
+            <br>
+            <button type="button" class="btn btn-outline-primary" @click="cookNow">Cook Now</button>
           </div>
         </div>
       </div>
@@ -123,6 +128,13 @@ export default {
     removeFromMealList() {
       this.$root.removeIdFromMealList(this.recipe.id, this.$route.query.source === "db");
       this.inMealList = false;
+    },
+    async cookNow() {
+      this.addToMealList();
+      await this.$router.push({
+        path: `/making/${this.recipe.id}`,
+        query: this.$route.query.source === "db" ? { source: "db" } : {}
+      });
     }
   }
 };

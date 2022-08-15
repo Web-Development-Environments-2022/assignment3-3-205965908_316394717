@@ -2,7 +2,7 @@
   <b-modal id="modal-1" title="Create Recipe" class="my-modal" hide-footer>
     <div class="modal-content">
       <div class="modal-body p-4">
-        <form>
+        <form onsubmit="return;">
           <div class="form-outline mb-4">
             <label class="form-label" for="form6Example3" style="margin-left: 0px;">Title</label>
             <input type="text" id="form6Example3" class="form-control" v-model="titleInput">
@@ -129,7 +129,10 @@ export default {
         return;
       }
 
+      let flagAllGood = true;
+
       let instructionDict = {};
+
       let keys = Object.keys(this.$root.store.recipeInformation);
       keys.forEach(objKey => {
           if (objKey.startsWith("Instruction")) {
@@ -137,6 +140,7 @@ export default {
             let value = this.$root.store.recipeInformation[objKey];
             if (!value.step) {
               this.$root.toast("Input Error", "All instructions fields must fulfill!", "danger");
+              flagAllGood = false;
               return;
             }
             instructionDict[key] = value;
@@ -149,6 +153,7 @@ export default {
             let value = this.$root.store.recipeInformation[objKey];
             if (!value.id || !value.amountType) {
               this.$root.toast("Input Error", "All ingredients fields must fulfill!", "danger");
+              flagAllGood = false;
               return;
             }
             instructionDict[key].ingredients.push(value);
@@ -161,12 +166,18 @@ export default {
             let value = this.$root.store.recipeInformation[objKey];
             if (!value.id) {
               this.$root.toast("Input Error", "All equipments fields must fulfill!", "danger");
+              flagAllGood = false;
               return;
             }
             instructionDict[key].equipments.push(value);
           }
         }
       );
+
+      if (flagAllGood === false) {
+        return;
+      }
+
       let instructionArray = Object.values(instructionDict);
       let myRecipe = {
         title: this.titleInput,
@@ -183,24 +194,28 @@ export default {
 
       try {
         const response = await this.axios.post("recipes", myRecipe);
+        if (response.status === 201) {
+          this.$root.toast("Success!", "Recipe has been created.", "success");
+          this.instructionComponent = [];
+          this.titleInput = "";
+          this.pictureInput = "";
+          this.readyInMinutesInput = 1;
+          this.servingInput = 1;
+          this.isVegetarian = false;
+          this.isVegan = false;
+          this.isGlutenFree = false;
+          this.isFamily = false;
+          this.inventedByInput = "";
+          this.serveDayInput = "";
+        } else {
+          this.$root.toast("Input Error", response.data.message, "danger");
+          return;
+        }
+        this.removeInstruction();
       } catch (e) {
         this.$root.toast("Input Error", e.message, "danger");
         return;
       }
-
-      this.$root.toast("Success!", "Recipe has been created.", "success");
-      this.instructionComponent = [];
-      this.titleInput = "";
-      this.pictureInput = "";
-      this.readyInMinutesInput = 1;
-      this.servingInput = 1;
-      this.isVegetarian = false;
-      this.isVegan = false;
-      this.isGlutenFree = false;
-      this.isFamily = false;
-      this.inventedByInput = "";
-      this.serveDayInput = "";
-      this.removeInstruction();
     }
   }
 };

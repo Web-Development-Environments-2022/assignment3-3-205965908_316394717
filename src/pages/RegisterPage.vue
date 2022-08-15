@@ -252,9 +252,10 @@ export default {
             email: this.form.email
           }
         );
-        this.$router.push("login");
+        this.$root.toast("Success", "User created successfully", "success");
+        this.$router.push("/login");
       } catch (err) {
-        this.$root.toast("Input Error", err.response, "danger");
+        this.$root.toast("Input Error", err.response.data.message, "danger");
         this.form.submitError = err.response.data.message;
       }
     },

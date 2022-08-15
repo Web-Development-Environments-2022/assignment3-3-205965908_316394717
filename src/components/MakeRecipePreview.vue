@@ -2,7 +2,10 @@
   <div>
     <br>
     <b-row class="black-border">
-      <b-col cols="1" class="cen"> <!-- UP-->
+      <b-col cols="1" class="cen">
+        <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ index + 1 }}</strong>
+      </b-col>
+      <b-col cols="1" class="cen">
         <b-icon-chevron-double-up @click="pressUp"></b-icon-chevron-double-up>
         <br> <br> <br>
         <b-icon-chevron-double-down @click="pressDown"></b-icon-chevron-double-down>
@@ -19,7 +22,7 @@
           {{ item.title }}
         </router-link>
       </b-col>
-      <b-col cols="4" class="cen">
+      <b-col cols="3" class="cen">
         <b-progress height="1.5rem" class="mb-3">
           <b-progress-bar :value="progressVal" variant="success" striped>
             <span><strong>{{ progressText }}</strong></span>
@@ -41,6 +44,7 @@ export default {
   name: "MakeRecipePreview",
   props: {
     item: { required: true },
+    index: { type: Number, required: true },
     inDb: { type: Boolean, required: true }
   },
   data() {

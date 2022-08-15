@@ -9,7 +9,8 @@
     </b-row>
     <b-row>
       <b-col cols="3">
-        <RecipePreviewList title="Random Recipes" :recipes="randomRecipes || []" class="RandomRecipes center" />
+        <RecipePreviewList title="Explore This Recipes" :recipes="randomRecipes || []" />
+        <b-button variant="primary" class="w-100" @click="changeRandomRecipes">More</b-button>
       </b-col>
       <b-col cols="6">
         <strong>
@@ -18,7 +19,7 @@
             <p>Our website is full of great taste recipes that are just waiting for your next meal.</p>
             <p>Take a short registration and enjoy the full functionality available on our site.</p>
             <p>If you are coming to Netanya city, don't forget to visit in the best restaurant in town:</p>
-            <img src="https://images.rest.co.il/Customers/80257072/2d6368774beb41aa91a91ac5c5a4e23f.jpg">
+            <img src="https://images.rest.co.il/Customers/80257072/2d6368774beb41aa91a91ac5c5a4e23f.jpg" style="width: 100%">
 
           </b-container>
         </strong>
@@ -27,9 +28,7 @@
       <b-col cols="3">
         <Login v-if="!$root.store.username"></Login>
 
-        <RecipePreviewList v-else title="Last Viewed Recipes" :recipes="lastViewedRecipes || []"
-                           :class="{RandomRecipes: true, blur: !$root.store.username, center: true}"
-                           disabled></RecipePreviewList>
+        <RecipePreviewList v-else title="Last Viewed Recipes" :recipes="lastViewedRecipes || []" />
       </b-col>
     </b-row>
   </div>
@@ -48,8 +47,11 @@ export default {
       lastViewedRecipes: []
     };
   },
+  async mounted() {
+    await this.getData();
+  },
   methods: {
-    async GetRandomRecipes() {
+    async getRandomRecipes() {
       try {
         const response = await this.axios.get("recipes/random/3");
         return response.data;
@@ -57,38 +59,26 @@ export default {
         this.$root.toast("Input Error", error.message, "danger");
       }
     },
-    async GetLastViewedRecipes() {
+    async getLastViewedRecipes() {
       try {
         const response = await this.axios.get("recipes/viewed/3");
         return response.data;
       } catch (error) {
         this.$root.toast("Input Error", error.message, "danger");
       }
+    },
+    async getData() {
+      this.randomRecipes = await this.getRandomRecipes();
+      if (this.$root.store.username)
+        this.lastViewedRecipes = await this.getLastViewedRecipes();
+    },
+    async changeRandomRecipes() {
+      this.randomRecipes = await this.getRandomRecipes();
     }
-  },
-  async mounted() {
-    this.randomRecipes = await this.GetRandomRecipes();
-    if (this.$root.store.username)
-      this.lastViewedRecipes = await this.GetLastViewedRecipes();
-    else
-      this.lastViewedRecipes = await this.GetRandomRecipes();
   }
 };
 </script>
 
 <style scoped>
 
-.RandomRecipes {
-  margin: 10px 0 10px;
-}
-
-.blur {
-  -webkit-filter: blur(5px); /* Safari 6.0 - 9.0 */
-  filter: blur(2px);
-}
-
-::v-deep .blur .recipe-preview {
-  pointer-events: none;
-  cursor: default;
-}
 </style>

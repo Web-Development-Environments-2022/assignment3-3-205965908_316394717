@@ -26,6 +26,10 @@ export default {
   props: {
     title: { type: String, required: true },
     recipes: { type: Array, required: true }
+  },
+  created() {
+    if (!this.recipes || this.recipes.length === 0)
+      this.$emit("created");
   }
 };
 </script>

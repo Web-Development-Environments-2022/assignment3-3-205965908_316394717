@@ -14,8 +14,9 @@
         <b-form-invalid-feedback> Password is required</b-form-invalid-feedback>
       </b-form-group>
 
-      <b-button type="submit" variant="primary" style="width:100px;display:block;" class="mx-auto w-100">Login
+      <b-button type="submit" variant="primary" style="width:100px;display:block;" class="mx-auto w-100 mb-2">Login
       </b-button>
+      <b-button variant="danger"  class="mx-auto w-100" @click="$router.push('/register')">Register</b-button>
       <div class="mt-2">
         Do not have an account yet?
         <router-link to="register"> Register in here</router-link>
@@ -62,9 +63,12 @@ export default {
       try {
         await this.axios.post("Login", { userName: this.form.username, password: this.form.password });
         this.$root.store.login(this.form.username);
-        this.$router.replace("/");
+        if (this.$router.currentRoute.path === "/")
+          this.$router.go();
+        else
+          await this.$router.replace("/");
       } catch (err) {
-        this.$root.toast("Input Error", e.response.data.message, "danger");
+        this.$root.toast("Input Error", err.response.data.message, "danger");
         this.form.submitError = err.response.data.message;
       }
     },

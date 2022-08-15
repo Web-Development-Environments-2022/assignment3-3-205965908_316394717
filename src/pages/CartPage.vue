@@ -5,8 +5,8 @@
     <div v-else-if="itemList.length === 0"><h3>No data to show</h3></div>
     <div v-else>
       <button type="button" class="btn btn-outline-danger" @click="removeAll">Remove All</button>
-      <MakeRecipePreview v-for="item in itemList" :key="item.data.id" :item="item.data" :in-db="item.inDb"
-                         @remove="removed"></MakeRecipePreview>
+      <MakeRecipePreview v-for="(item, index) in itemList" :key="item.data.id" :item="item.data" :in-db="item.inDb"
+                         @remove="removed" :index="index"></MakeRecipePreview>
     </div>
   </div>
 </template>
