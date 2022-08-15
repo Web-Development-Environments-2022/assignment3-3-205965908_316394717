@@ -12,6 +12,7 @@
         <RecipePreview class="recipePreview" :recipe="r" :in-db="false" />
       </b-col>
     </b-row>
+    <b-button v-if="haveMore === true" variant="primary" class="w-100" @click="$emit('updateRandom')">More</b-button>
   </div>
 </template>
 
@@ -25,7 +26,8 @@ export default {
   },
   props: {
     title: { type: String, required: true },
-    recipes: { type: Array, required: true }
+    recipes: { type: Array, required: true },
+    haveMore: { type: Boolean, default: false }
   },
   created() {
     if (!this.recipes || this.recipes.length === 0)

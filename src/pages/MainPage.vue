@@ -9,8 +9,7 @@
     </b-row>
     <b-row>
       <b-col cols="3">
-        <RecipePreviewList title="Explore This Recipes" :recipes="randomRecipes || []" />
-        <b-button variant="primary" class="w-100" @click="changeRandomRecipes">More</b-button>
+        <RecipePreviewList title="Explore This Recipes" :recipes="randomRecipes || []" :have-more="true" @updateRandom="changeRandomRecipes"/>
       </b-col>
       <b-col cols="6">
         <strong>
